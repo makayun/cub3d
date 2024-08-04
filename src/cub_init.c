@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:41:00 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/04 02:00:48 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/04 11:27:23 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	cub_init_map(t_data *data)
 						1, 0, 0, 0, 0, 1, 0, 1,
 						1, 0, 0, 0, 0, 1, 0, 1,
 						1, 1, 1, 1, 1, 1, 1, 1 };
-	data->map.size = 64;
-	data->map.x = 8;
-	data->map.y = 8;
+	data->map->size = 64;
+	data->map->x = 8;
+	data->map->y = 8;
 	i = -1;
-	while (++i < data->map.size)
-		data->map.map[i] = test_map[i];
+	while (++i < data->map->size)
+		data->map->map[i] = test_map[i];
 
 }
 
@@ -44,14 +44,14 @@ void	cub_init(t_data *data)
 		free (data->mlx);
 		exit (EXIT_FAILURE);
 	}
-	data->render.img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
-	data->render.addr = mlx_get_data_addr(data->render.img, &data->render.bpp, &data->render.line_len, &data->render.endian);
-	data->player.pos.x = 40;
-	data->player.pos.y = 40;
-	data->player.angle = 0;
-	data->player.delta.x = cos(data->player.angle) * STEP;
-	data->player.delta.y = sin(data->player.angle) * STEP;
-	data->render.back_colors[FLOOR] = BLUE;
-	data->render.back_colors[CEILING] = GREEN;
+	data->render->img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
+	data->render->addr = mlx_get_data_addr(data->render->img, &data->render->bpp, &data->render->line_len, &data->render->endian);
+	data->player->pos.x = 40;
+	data->player->pos.y = 40;
+	data->player->angle = 0;
+	data->player->delta.x = cos(data->player->angle) * STEP;
+	data->player->delta.y = sin(data->player->angle) * STEP;
+	data->render->back_colors[FLOOR] = BLUE;
+	data->render->back_colors[CEILING] = GREEN;
 	cub_init_map(data);
 }

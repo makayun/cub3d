@@ -6,16 +6,20 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:42:48 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/03 04:19:50 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/04 22:25:12 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color)
+inline void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color)
 {
 	char	*pixel;
 
+	x *= (x > 0);
+	y *= (y > 0);
+	x += (x > WIN_WIDTH) * (WIN_WIDTH - x - 1);
+	y += (y > WIN_HEIGHT) * (WIN_HEIGHT - y - 1);
 	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	*(int *)pixel = color;
 }
@@ -46,7 +50,7 @@ void	cub_draw_background(t_image *image)
 
 void	cub_draw(t_data *data)
 {
-	cub_draw_background(&data->render);
+	cub_draw_background(data->render);
 	cub_draw_map(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->render.img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->render->img, 0, 0);
 }

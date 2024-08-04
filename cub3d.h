@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/04 04:20:47 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/04 22:14:36 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define CEILING	0
 
 # define MAP_MAX		64*64
-# define MAP_BLOCK		16
+# define MAP_BLOCK		64
 # define STEP			4
 # define POINTER_LENGHT	MAP_BLOCK/4*3
 
@@ -85,6 +85,11 @@ typedef struct s_map {
 	unsigned int	size;
 }				t_map;
 
+typedef struct s_ray {
+	t_position	pos;
+	float		angle;
+}				t_ray;
+
 typedef struct s_player {
 	t_position		pos;
 	t_position		delta;
@@ -104,15 +109,16 @@ typedef struct s_image
 typedef struct s_data {
 	void		*mlx;
 	void		*win;
-	t_image		render;
-	t_player	player;
-	t_map		map;
+	t_image		*render;
+	t_player	*player;
+	t_map		*map;
 }				t_data;
 
 void	cub_init(t_data *data);
 void	cub_draw(t_data *data);
 void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color);
 void	cub_draw_map(t_data *data);
+void	cub_rays(t_data *data);
 
 unsigned int	cub_adjust_brightness(int color, float factor);
 float			cub_gradient(float frow);
