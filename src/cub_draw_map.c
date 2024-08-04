@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 00:28:26 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/04 12:45:00 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/05 00:33:37 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,12 @@ void	cub_draw_player(t_data *data)
 	t_coord	coordinates;
 	t_coord line_end;
 
-	coordinates.x = (int)data->player->pos.x;
-	coordinates.y = (int)data->player->pos.y;
+	coordinates.x = (int)data->player->pos.x - MAP_BLOCK / 8;
+	coordinates.y = (int)data->player->pos.y - MAP_BLOCK / 8;
 	cub_draw_square(data->render, coordinates, MAP_BLOCK / 4, YELLOW);
-	coordinates.x += MAP_BLOCK / 8;
-	coordinates.y += MAP_BLOCK / 8;
+	// coordinates.x += MAP_BLOCK / 8;
+	// coordinates.y += MAP_BLOCK / 8;
+	coordinates = cub_pos_to_coord(data->player->pos);
 	line_end.x = coordinates.x + cos(data->player->angle) * POINTER_LENGHT;
 	line_end.y = coordinates.y + sin(data->player->angle) * POINTER_LENGHT;
 	cub_draw_line(data->render, coordinates, line_end, YELLOW);
@@ -99,4 +100,5 @@ void	cub_draw_map(t_data *data)
 		i++;
 	}
 	cub_draw_player(data);
+	cub_rays(data->player, data->map, data->render);
 }

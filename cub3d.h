@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/04 22:14:36 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/05 00:33:13 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,9 @@ void	cub_init(t_data *data);
 void	cub_draw(t_data *data);
 void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color);
 void	cub_draw_map(t_data *data);
-void	cub_rays(t_data *data);
+void	cub_draw_line(t_image *image, t_coord start, t_coord end, int color);
+void	cub_rays(t_player *player, t_map *map, t_image *image);
+t_coord	cub_pos_to_coord(t_position pos);
 
 unsigned int	cub_adjust_brightness(int color, float factor);
 float			cub_gradient(float frow);
