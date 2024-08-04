@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/03 04:21:35 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/04 04:20:47 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 
+	// MATH CONSTANTS
+	// M_E       base of natural logarithm, e
+	// M_LOG2E   log2(e)
+	// M_LOG10E  log10(e)
+	// M_LN2     ln(2)
+	// M_LN10    ln(10)
+	// M_PI      pi
+	// M_PI_2    pi / 2
+	// M_PI_4    pi / 4
+	// M_1_PI    1 / pi
+	// M_2_PI    2 / pi
+	// M_2_SQRTPI 2 / sqrt(pi)
+	// M_SQRT2   sqrt(2)
+	// M_SQRT1_2 sqrt(1/2)
+
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 640
 
@@ -33,8 +48,10 @@
 # define FLOOR		1
 # define CEILING	0
 
-# define MAP_MAX 64*64
-# define MAP_BLOCK 16
+# define MAP_MAX		64*64
+# define MAP_BLOCK		16
+# define STEP			4
+# define POINTER_LENGHT	MAP_BLOCK/4*3
 
 # define BLACK		0x0
 # define GRAY		0x00C0C0C0
@@ -45,6 +62,11 @@
 # define CYAN		0x0000FFFF
 # define MAGENTA	0x00FF00FF
 # define YELLOW		0x00FFFF00
+
+# define FORWARD	1
+# define BACKWARD	-1
+# define RIGHT		2
+# define LEFT		-2	
 
 typedef struct s_coord {
 	int	x;
@@ -65,7 +87,8 @@ typedef struct s_map {
 
 typedef struct s_player {
 	t_position		pos;
-	int				dir;
+	t_position		delta;
+	float			angle;
 }				t_player;
 
 typedef struct s_image

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:41:00 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/03 09:11:44 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/04 02:00:48 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void	cub_init(t_data *data)
 	data->render.addr = mlx_get_data_addr(data->render.img, &data->render.bpp, &data->render.line_len, &data->render.endian);
 	data->player.pos.x = 40;
 	data->player.pos.y = 40;
+	data->player.angle = 0;
+	data->player.delta.x = cos(data->player.angle) * STEP;
+	data->player.delta.y = sin(data->player.angle) * STEP;
 	data->render.back_colors[FLOOR] = BLUE;
 	data->render.back_colors[CEILING] = GREEN;
 	cub_init_map(data);

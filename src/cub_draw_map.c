@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 00:28:26 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/03 09:08:01 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/04 04:18:43 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,61 @@ void	cub_draw_square(t_image *image, t_coord coord, int size, int color)
 	}
 }
 
+void cub_draw_line(t_image *image, t_coord start, t_coord end, int color)
+{
+	t_coord	delta;
+	t_coord	step;
+    int err;
+    int e2;
+
+	delta.x = abs(end.x - start.x);
+	delta.y = abs(end.y - start.y);
+    if (start.x < end.x)
+        step.x = 1;
+    else
+        step.x = -1;
+    if (start.y < end.y)
+        step.y = 1;
+    else
+        step.y = -1;
+    if (delta.x > delta.y)
+        err = delta.x / 2;
+    else
+        err = -delta.y / 2;
+    while (1)
+    {
+        cub_draw_pixel(image, start.x, start.y, color);
+        if (start.x == end.x && start.y == end.y)
+            break;
+        e2 = err;
+        if (e2 > -delta.x)
+        {
+            err -= delta.y;
+            start.x += step.x;
+        }
+        if (e2 < delta.y)
+        {
+            err += delta.x;
+            start.y += step.y;
+        }
+    }
+}
+
+
+
 void	cub_draw_player(t_data *data)
 {
 	t_coord	coordinates;
+	t_coord line_end;
 
-	coordinates.x = data->player.pos.x;
-	coordinates.y = data->player.pos.y;
+	coordinates.x = (int)data->player.pos.x;
+	coordinates.y = (int)data->player.pos.y;
 	cub_draw_square(&data->render, coordinates, MAP_BLOCK / 4, YELLOW);
+	coordinates.x += MAP_BLOCK / 8;
+	coordinates.y += MAP_BLOCK / 8;
+	line_end.x = coordinates.x + cos(data->player.angle) * POINTER_LENGHT;
+	line_end.y = coordinates.y + sin(data->player.angle) * POINTER_LENGHT;
+	cub_draw_line(&data->render, coordinates, line_end, YELLOW);
 }
 
 void	cub_draw_map(t_data *data)
@@ -57,11 +105,3 @@ void	cub_draw_map(t_data *data)
 	}
 	cub_draw_player(data);
 }
-
-// 0123 4567 890a bcde
-
-// 1111 1111 1010 0001
-// 0000 0000 0000 0000
-
-
-
