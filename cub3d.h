@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/05 00:33:13 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/05 22:47:39 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define CEILING	0
 
 # define MAP_MAX		64*64
-# define MAP_BLOCK		64
+# define MAP_BLOCK		16
 # define STEP			4
 # define POINTER_LENGHT	MAP_BLOCK/4*3
 
@@ -62,6 +62,11 @@
 # define CYAN		0x0000FFFF
 # define MAGENTA	0x00FF00FF
 # define YELLOW		0x00FFFF00
+
+# define ANSI_DEF		"\001\e[0m\002"
+# define ANSI_GRAY		"\001\e[0;90m\002"
+# define ANSI_RED		"\001\e[0;91m\002"
+# define ANSI_GREEN		"\001\e[0;92m\002"
 
 # define FORWARD	1
 # define BACKWARD	-1
@@ -94,6 +99,7 @@ typedef struct s_player {
 	t_position		pos;
 	t_position		delta;
 	float			angle;
+	int				fow;
 }				t_player;
 
 typedef struct s_image

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:15 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/04 13:10:11 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/05 01:28:05 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,12 @@ int	cub_key_handle(int keysym, t_data *data)
 		cub_step(FORWARD, data->player);
 	else if (keysym == XK_s || keysym == XK_Down)
 		cub_step(BACKWARD, data->player);
+	else if (keysym == XK_equal)
+		data->player->fow = ++data->player->fow - (data->player->fow > 60);
+	else if (keysym == XK_minus)
+		data->player->fow = --data->player->fow + (data->player->fow == 0);
 	cub_draw(data);
-	printf ("Angle: %f, x: %f, y: %f\n", data->player->angle, data->player->pos.x, data->player->pos.y);
+	printf ("Angle: %f, x: %f, y: %f, FOW: %d\n", data->player->angle, data->player->pos.x, data->player->pos.y, data->player->fow);
 	return (ALL_FINE);
 }
 
