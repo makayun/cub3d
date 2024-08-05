@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/05 22:47:39 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/06 00:29:21 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@
 # define ANSI_GRAY		"\001\e[0;90m\002"
 # define ANSI_RED		"\001\e[0;91m\002"
 # define ANSI_GREEN		"\001\e[0;92m\002"
+# define ANSI_MAGENTA	"\001\e[35m\002"
+# define ANSI_CYAN		"\001\e[36m\002"
 
 # define FORWARD	1
 # define BACKWARD	-1
