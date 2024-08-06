@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:50:06 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/04 13:03:32 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/06 01:20:24 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,12 @@ unsigned int	cub_adjust_brightness(int color, float factor)
 	blue = (unsigned char)((color & 0xFF) * factor);
 	new_color = (color & 0xFF000000) | (red << 16) | (green << 8) | blue;
 	return (new_color);
+}
+
+inline void	cub_tool_coord_norm(int *x, int *y)
+{
+	*x *= (*x > 0);
+	*y *= (*y > 0);
+	*x += (*x > WIN_WIDTH) * (WIN_WIDTH - *x - 1);
+	*y += (*y > WIN_HEIGHT) * (WIN_HEIGHT - *y - 1);
 }

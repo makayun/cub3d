@@ -6,13 +6,13 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 00:28:26 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 00:19:45 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/06 01:19:55 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static inline void	cub_draw_square(t_image *image, t_coord coord, int size, int color)
+void	cub_draw_square(t_image *image, t_coord coord, int size, int color)
 {
 	int	i;
 	int	j;
@@ -38,10 +38,8 @@ void cub_draw_line(t_image *image, t_coord start, t_coord end, int color)
     int		err;
     int		e2;
 
-	end.x *= (end.x > 0);
-	end.y *= (end.y > 0);
-	end.x += (end.x > WIN_WIDTH) * (WIN_WIDTH - end.x - 1);
-	end.y += (end.y > WIN_HEIGHT) * (WIN_HEIGHT - end.y - 1);
+	cub_tool_coord_norm(&start.x, &start.y);
+	cub_tool_coord_norm(&end.x, &end.y);
 	sign[0] = -1;
 	sign[1] = 1;
 	delta.x = abs(end.x - start.x);

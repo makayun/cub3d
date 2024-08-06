@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:42:48 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/04 22:25:12 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/06 00:48:57 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ inline void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color)
 {
 	char	*pixel;
 
-	x *= (x > 0);
-	y *= (y > 0);
-	x += (x > WIN_WIDTH) * (WIN_WIDTH - x - 1);
-	y += (y > WIN_HEIGHT) * (WIN_HEIGHT - y - 1);
+	cub_tool_coord_norm(&x, &y);
 	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	*(int *)pixel = color;
 }

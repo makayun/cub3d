@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:12:36 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 00:38:34 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/06 02:19:59 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,25 @@ t_coord	cub_pos_to_coord(t_position pos)
 {
 	t_coord ret;
 
-	ret.x = (int)pos.x ;
-	ret.y = (int)pos.y;
+	ret.x = (int)(pos.x + 0.5);
+	ret.y = (int)(pos.y + 0.5);
 	return (ret);
 }
 
-// float	dist(t_position a, t_position b, float angle)
-// {
-// 	return (sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y)));
-// }
+float	cub_dist(t_position a, t_position b)
+{
+	return (sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y)));
+}
 
 void cub_rays(t_player *player, t_map *map, t_image *image)
 {
 	t_coord			m;
 	t_position		ray;
+	t_position		hor_pos;
+	t_position		vert_pos;
 	t_position		offset;
-	bool			h_hit;
-	bool			v_hit;
+	float			h_hit_dist;
+	float			v_hit_dist;
 	int				ray_num;
 	unsigned int	mp;
 	float			ray_angle;
@@ -45,12 +47,14 @@ void cub_rays(t_player *player, t_map *map, t_image *image)
 	{
 		// Check horizontal lines
 		a_tan = -1/tan(ray_angle);
+		h_hit_dist = INT32_MAX;
 		if (ray_angle > M_PI) // looking up
 		{
 			ray.y = (((int)player->pos.y >> 4) << 4) - 0.0001;
 			ray.x = (player->pos.y - ray.y) * a_tan + player->pos.x;
 			offset.y = -MAP_BLOCK;
 			offset.x = -offset.y * a_tan;
+
 		}
 		else if (ray_angle < M_PI) // looking down
 		{
@@ -65,15 +69,11 @@ void cub_rays(t_player *player, t_map *map, t_image *image)
 			m.y = (int)(ray.y) >> 4;
 			mp = m.y * map->x + m.x;
 			if (m.x < 0 || m.x >= (int)map->x || m.y < 0 || m.y >= (int)map->y)
-			{
-				printf(ANSI_CYAN "Horizontal lines: " ANSI_RED "Ray out of bounds[%d]: x=%d, y=%d\n" ANSI_DEF, mp, m.x, m.y);
-				h_hit = 0;
 				break ;
-			}
 			else if (mp > 0 && mp < map->size && map->map[mp] == 1)
 			{
-				printf(ANSI_CYAN "Horizontal lines: " ANSI_GREEN "Wall hit at map[%d]: x=%d, y=%d\n" ANSI_DEF, mp, m.x, m.y);
-				h_hit = 1;
+				hor_pos = ray;
+				h_hit_dist = cub_dist(player->pos, hor_pos);
 				break ;
 			}
 			else
@@ -82,10 +82,9 @@ void cub_rays(t_player *player, t_map *map, t_image *image)
 				ray.y += offset.y;
 			}
 		}
-		if (h_hit)
-			cub_draw_line(image, cub_pos_to_coord(player->pos), cub_pos_to_coord(ray), CYAN);
 		// Check vertical lines
 		neg_tan = -tan(ray_angle);
+		v_hit_dist = INT32_MAX;
 		if (ray_angle > M_PI_2 && ray_angle < (3 * M_PI_2)) // looking left
 		{
 			ray.x = (((int)player->pos.x >> 4) << 4) - 0.0001;
@@ -106,15 +105,11 @@ void cub_rays(t_player *player, t_map *map, t_image *image)
 			m.y = (int)(ray.y) >> 4;
 			mp = m.y * map->x + m.x;
 			if (m.x < 0 || m.x >= (int)map->x || m.y < 0 || m.y >= (int)map->y)
-			{
-				printf(ANSI_MAGENTA "Vertical lines: " ANSI_RED "Ray out of bounds[%d]: x=%d, y=%d\n" ANSI_DEF, mp, m.x, m.y);
-				v_hit = 0;
 				break ;
-			}
 			else if (mp > 0 && mp < map->size && map->map[mp] == 1)
 			{
-				printf(ANSI_MAGENTA "Vertical lines: " ANSI_GREEN "Wall hit at map[%d]: x=%d, y=%d\n" ANSI_DEF, mp, m.x, m.y);
-				v_hit = 1;
+				vert_pos = ray;
+				v_hit_dist = cub_dist(player->pos, vert_pos);
 				break ;
 			}
 			else
@@ -123,8 +118,11 @@ void cub_rays(t_player *player, t_map *map, t_image *image)
 				ray.y += offset.y;
 			}
 		}
-		if (v_hit)
-			cub_draw_line(image, cub_pos_to_coord(player->pos), cub_pos_to_coord(ray), MAGENTA);
+		if (h_hit_dist < v_hit_dist)
+			ray = hor_pos;
+		else
+			ray = vert_pos;
+		cub_draw_line(image, cub_pos_to_coord(player->pos), cub_pos_to_coord(ray), GREEN);
 		ray_num++;
 	}
 }

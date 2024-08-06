@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 00:29:21 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/06 01:26:14 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@
 # define MAP_BLOCK		16
 # define STEP			4
 # define POINTER_LENGHT	MAP_BLOCK/4*3
+
+# define FOW_MAX	60
+# define FOW_MIN	1
 
 # define BLACK		0x0
 # define GRAY		0x00C0C0C0
@@ -129,6 +132,7 @@ void	cub_draw_map(t_data *data);
 void	cub_draw_line(t_image *image, t_coord start, t_coord end, int color);
 void	cub_rays(t_player *player, t_map *map, t_image *image);
 t_coord	cub_pos_to_coord(t_position pos);
+void	cub_tool_coord_norm(int *x, int *y);
 
 unsigned int	cub_adjust_brightness(int color, float factor);
 float			cub_gradient(float frow);
