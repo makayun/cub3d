@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:41:00 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 00:52:43 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/06 03:50:32 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	cub_init(t_data *data)
 	data->player->angle = 0;
 	data->player->delta.x = cos(data->player->angle) * STEP;
 	data->player->delta.y = sin(data->player->angle) * STEP;
-	data->player->fow = 1;
+	data->player->fow = FOW_MAX / 2;
 	data->render->back_colors[FLOOR] = MAGENTA;
 	data->render->back_colors[CEILING] = GRAY;
 	cub_init_map(data);

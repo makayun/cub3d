@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:12:36 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 02:19:59 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/06 03:43:32 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,26 @@ void cub_rays(t_player *player, t_map *map, t_image *image)
 	float			a_tan;
 	float			neg_tan;
 
-	ray_angle = player->angle;
+	ray_angle = player->angle - DEG_TO_RAD * player->fow / 2;
 	ray_num = 0;
-	while (ray_num < 1)
+	while (ray_num < player->fow)
 	{
+		ray_angle += (ray_angle < 0) * PI_TWICE - (ray_angle > PI_TWICE) * PI_TWICE;
 		// Check horizontal lines
 		a_tan = -1/tan(ray_angle);
 		h_hit_dist = INT32_MAX;
 		if (ray_angle > M_PI) // looking up
 		{
 			ray.y = (((int)player->pos.y >> 4) << 4) - 0.0001;
-			ray.x = (player->pos.y - ray.y) * a_tan + player->pos.x;
 			offset.y = -MAP_BLOCK;
-			offset.x = -offset.y * a_tan;
-
 		}
 		else if (ray_angle < M_PI) // looking down
 		{
 			ray.y = (((int)player->pos.y >> 4) << 4) + MAP_BLOCK;
-			ray.x = (player->pos.y - ray.y) * a_tan + player->pos.x;
 			offset.y = MAP_BLOCK;
-			offset.x = -offset.y * a_tan;
 		}
+			ray.x = (player->pos.y - ray.y) * a_tan + player->pos.x;
+			offset.x = -offset.y * a_tan;
 		while (1)
 		{
 			m.x = (int)(ray.x) >> 4;
@@ -88,17 +86,15 @@ void cub_rays(t_player *player, t_map *map, t_image *image)
 		if (ray_angle > M_PI_2 && ray_angle < (3 * M_PI_2)) // looking left
 		{
 			ray.x = (((int)player->pos.x >> 4) << 4) - 0.0001;
-			ray.y = (player->pos.x - ray.x) * neg_tan + player->pos.y;
 			offset.x = -MAP_BLOCK;
-			offset.y = -offset.x * neg_tan;
 		}
 		else if (ray_angle < M_PI_2 || ray_angle > (3 * M_PI_2)) // looking right
 		{
 			ray.x = (((int)player->pos.x >> 4) << 4) + MAP_BLOCK;
-			ray.y = (player->pos.x - ray.x) * neg_tan + player->pos.y;
 			offset.x = MAP_BLOCK;
-			offset.y = -offset.x * neg_tan;
 		}
+			ray.y = (player->pos.x - ray.x) * neg_tan + player->pos.y;
+			offset.y = -offset.x * neg_tan;
 		while (1)
 		{
 			m.x = (int)(ray.x) >> 4;
@@ -123,6 +119,7 @@ void cub_rays(t_player *player, t_map *map, t_image *image)
 		else
 			ray = vert_pos;
 		cub_draw_line(image, cub_pos_to_coord(player->pos), cub_pos_to_coord(ray), GREEN);
+		ray_angle += DEG_TO_RAD;
 		ray_num++;
 	}
 }

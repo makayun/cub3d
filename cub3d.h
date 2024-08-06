@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 01:26:14 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/06 03:54:49 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 	// M_2_SQRTPI 2 / sqrt(pi)
 	// M_SQRT2   sqrt(2)
 	// M_SQRT1_2 sqrt(1/2)
+# define DEG_TO_RAD 0.0174533
+# define PI_TWICE	M_PI*2
 
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 640

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:15 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 01:26:51 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/06 03:26:37 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	cub_turn(int side, t_player *player)
 {
 	if (side == LEFT)
 	{
-		player->angle -= (float)0.1;
+		player->angle -= 0.1; 
 		if (player->angle < 0)
 			player->angle += 2 * M_PI;
 	}
 	else if (side == RIGHT)
 	{
-		player->angle += (float)0.1;
+		player->angle += 0.1;
 		if (player->angle > 2 * M_PI)
 			player->angle -= 2 * M_PI;
 	}
