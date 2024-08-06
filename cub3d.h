@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 03:54:49 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/06 16:55:27 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 	// M_2_SQRTPI 2 / sqrt(pi)
 	// M_SQRT2   sqrt(2)
 	// M_SQRT1_2 sqrt(1/2)
+	
 # define DEG_TO_RAD 0.0174533
 # define PI_TWICE	M_PI*2
 
@@ -49,13 +50,17 @@
 # define ALL_FINE	1
 # define FLOOR		1
 # define CEILING	0
+# define HOR		0
+# define VERT		1
 
-# define MAP_MAX		64*64
+# define MAP_WIDTH_MAX	WIN_WIDTH/8
+# define MAP_HEIGHT_MAX	WIN_HEIGHT/8
+# define MAP_MAX		MAP_WIDTH_MAX*MAP_HEIGHT_MAX
 # define MAP_BLOCK		16
-# define STEP			4
+# define STEP			MAP_BLOCK/4
 # define POINTER_LENGHT	MAP_BLOCK/4*3
 
-# define FOW_MAX	60
+# define FOW_MAX	90
 # define FOW_MIN	1
 
 # define BLACK		0x0
@@ -95,6 +100,7 @@ typedef struct s_map {
 	unsigned int	x;
 	unsigned int	y;
 	unsigned int	size;
+	unsigned int	shift;
 }				t_map;
 
 typedef struct s_ray {
@@ -109,15 +115,14 @@ typedef struct s_player {
 	int				fow;
 }				t_player;
 
-typedef struct s_image
-{
+typedef struct s_image {
     void	*img;
     char	*addr;
 	int		back_colors[2];
     int		bpp;
     int		line_len;
     int		endian;
-}	t_image;
+}				t_image;
 
 typedef struct s_data {
 	void		*mlx;
