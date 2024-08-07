@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/07 01:45:38 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/07 10:04:14 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@
 # define MAP_HEIGHT_MAX	WIN_HEIGHT/MAP_BLOCK
 # define MAP_MAX		MAP_WIDTH_MAX*MAP_HEIGHT_MAX
 # define STEP			MAP_BLOCK/4
-# define POINTER_LENGHT	MAP_BLOCK/4*3
+# define POINTER_LENGHT	MAP_BLOCK/2
 
-# define FOW_MAX	90
-# define FOW_MIN	1
+# define FOW_MAX	120
+# define FOW_MIN	4
 
 # define BLACK		0x0
 # define GRAY		0x00C0C0C0
@@ -86,8 +86,8 @@
 # define LEFT		-2	
 
 typedef struct s_coord {
-	int	x;
-	int	y;
+	short	x;
+	short	y;
 }				t_coord;
 
 typedef struct s_position {
@@ -104,8 +104,12 @@ typedef struct s_map {
 }				t_map;
 
 typedef struct s_ray {
+	t_position	hit[2];
 	t_position	pos;
+	float		dist[2];
 	float		angle;
+	int			num;
+	bool		vert_hit;
 }				t_ray;
 
 typedef struct s_player {
@@ -134,12 +138,12 @@ typedef struct s_data {
 
 void	cub_init(t_data *data);
 void	cub_draw(t_data *data);
-void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color);
+void	cub_draw_pixel(t_image *img, short x, short y, unsigned int color);
 void	cub_draw_map(t_data *data);
 void	cub_draw_line(t_image *image, t_coord start, t_coord end, int color);
 void	cub_rays(t_player *player, t_map *map, t_image *image, t_data *data);
 t_coord	cub_pos_to_coord(t_position pos);
-void	cub_tool_coord_norm(int *x, int *y);
+void	cub_tool_coord_norm(short *x, short *y);
 float	cub_dist(t_position a, t_position b);
 
 unsigned int	cub_adjust_brightness(int color, float factor);

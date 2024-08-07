@@ -12,5 +12,7 @@ int main()
     printf("float[2] %lu\n", sizeof(float[2])); // 8
     printf("pointer %lu\n", sizeof(void *)); // 8
     printf("float %lu\n", sizeof(float)); // 4
-    printf("bool %lu\n", sizeof(bool)); // 1
-}
+    printf("bool %lu\n", sizeof(short)); // 1
+    short x = 0 - 1;
+    printf("%d\n", x);
+} 

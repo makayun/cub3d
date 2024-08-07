@@ -1,7 +1,7 @@
 NAME = cub3d
 UNAME = $(shell uname -s)
 CC = @clang
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Ofast
 MLX_DIR = ./mlx
 MLX_LIB = $(MLX_DIR)/libmlx.a
 LIBFT_DIR = ./libft

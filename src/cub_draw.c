@@ -6,13 +6,14 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:42:48 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 00:48:57 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/07 10:02:31 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-inline void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color)
+// inline void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color)
+inline void	cub_draw_pixel(t_image *img, short x, short y, unsigned int color)
 {
 	char	*pixel;
 

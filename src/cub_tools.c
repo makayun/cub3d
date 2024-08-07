@@ -6,13 +6,13 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:50:06 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 01:20:24 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/07 12:59:55 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-unsigned int	cub_adjust_brightness(int color, float factor)
+inline unsigned int	cub_adjust_brightness(int color, float factor)
 {
 	unsigned char	red;
 	unsigned char	green;
@@ -26,7 +26,7 @@ unsigned int	cub_adjust_brightness(int color, float factor)
 	return (new_color);
 }
 
-inline void	cub_tool_coord_norm(int *x, int *y)
+inline void	cub_tool_coord_norm(short *x, short *y)
 {
 	*x *= (*x > 0);
 	*y *= (*y > 0);
