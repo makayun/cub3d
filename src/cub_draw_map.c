@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 00:28:26 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 01:19:55 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/07 02:21:44 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ void	cub_draw_player(t_data *data)
 	t_coord	coordinates;
 	t_coord line_end;
 
-	coordinates.x = (int)data->player->pos.x - MAP_BLOCK / 8;
-	coordinates.y = (int)data->player->pos.y - MAP_BLOCK / 8;
-	cub_draw_square(data->render, coordinates, MAP_BLOCK / 4, YELLOW);
-	cub_rays(data->player, data->map, data->render);
+	coordinates.x = (int)data->player->pos.x - 1;
+	coordinates.y = (int)data->player->pos.y - 1;
+	cub_draw_square(data->render, coordinates, 3, YELLOW);
+	// cub_rays(data->player, data->map, data->render, data);
 	coordinates = cub_pos_to_coord(data->player->pos);
 	line_end.x = coordinates.x + cos(data->player->angle) * POINTER_LENGHT;
 	line_end.y = coordinates.y + sin(data->player->angle) * POINTER_LENGHT;
@@ -90,6 +90,7 @@ void	cub_draw_map(t_data *data)
 	int				color[2];
 	t_coord			coord;
 	
+	cub_rays(data->player, data->map, data->render, data);
 	color[0] = BLACK;
 	color[1] = GRAY;
 	i = 0;

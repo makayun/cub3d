@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/06 16:55:27 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/07 01:45:38 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,20 @@
 # define DEG_TO_RAD 0.0174533
 # define PI_TWICE	M_PI*2
 
-# define WIN_WIDTH 1024
-# define WIN_HEIGHT 640
+# define WIN_WIDTH 1440
+# define WIN_HEIGHT 900
 
 # define FT_ERROR	-1
 # define ALL_FINE	1
-# define FLOOR		1
 # define CEILING	0
+# define FLOOR		1
 # define HOR		0
 # define VERT		1
 
-# define MAP_WIDTH_MAX	WIN_WIDTH/8
-# define MAP_HEIGHT_MAX	WIN_HEIGHT/8
-# define MAP_MAX		MAP_WIDTH_MAX*MAP_HEIGHT_MAX
 # define MAP_BLOCK		16
+# define MAP_WIDTH_MAX	WIN_WIDTH/MAP_BLOCK
+# define MAP_HEIGHT_MAX	WIN_HEIGHT/MAP_BLOCK
+# define MAP_MAX		MAP_WIDTH_MAX*MAP_HEIGHT_MAX
 # define STEP			MAP_BLOCK/4
 # define POINTER_LENGHT	MAP_BLOCK/4*3
 
@@ -137,9 +137,10 @@ void	cub_draw(t_data *data);
 void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color);
 void	cub_draw_map(t_data *data);
 void	cub_draw_line(t_image *image, t_coord start, t_coord end, int color);
-void	cub_rays(t_player *player, t_map *map, t_image *image);
+void	cub_rays(t_player *player, t_map *map, t_image *image, t_data *data);
 t_coord	cub_pos_to_coord(t_position pos);
 void	cub_tool_coord_norm(int *x, int *y);
+float	cub_dist(t_position a, t_position b);
 
 unsigned int	cub_adjust_brightness(int color, float factor);
 float			cub_gradient(float frow);
