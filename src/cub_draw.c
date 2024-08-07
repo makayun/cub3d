@@ -6,13 +6,12 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:42:48 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/07 10:02:31 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/08 01:08:50 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-// inline void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color)
 inline void	cub_draw_pixel(t_image *img, short x, short y, unsigned int color)
 {
 	char	*pixel;
@@ -49,6 +48,7 @@ void	cub_draw_background(t_image *image)
 void	cub_draw(t_data *data)
 {
 	cub_draw_background(data->render);
+	cub_rays_n_walls(data->player, data->map, data);
 	cub_draw_map(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->render->img, 0, 0);
 }

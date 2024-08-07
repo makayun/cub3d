@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub_rays.c                                         :+:      :+:    :+:   */
+/*   cub_rays_n_walls.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:12:36 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/07 14:04:30 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/07 23:16:56 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-t_coord	cub_pos_to_coord(t_position pos)
-{
-	t_coord	ret;
-
-	ret.x = (int)(pos.x + 0.5);
-	ret.y = (int)(pos.y + 0.5);
-	return (ret);
-}
-
-inline float	cub_dist(t_position a, t_position b)
-{
-	return (sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y)));
-}
 
 float	cub_ray_loop(t_position offset, t_position *ray, t_map *map, t_player *player)
 {
@@ -64,8 +50,8 @@ float	cub_ray_check_horizontal(t_player *player, t_map *map, t_position *ray, fl
 		ray->y = (((int)player->pos.y >> map->shift) << map->shift) + MAP_BLOCK;
 		offset.y = MAP_BLOCK;
 	}
-		ray->x = (player->pos.y - ray->y) * a_tan + player->pos.x;
-		offset.x = -offset.y * a_tan;
+	ray->x = (player->pos.y - ray->y) * a_tan + player->pos.x;
+	offset.x = -offset.y * a_tan;
 	return (cub_ray_loop(offset, ray, map, player));
 }
 
@@ -85,75 +71,22 @@ float	cub_ray_check_vertical(t_player *player, t_map *map, t_position *ray, floa
 		ray->x = (((int)player->pos.x >> map->shift) << map->shift) + MAP_BLOCK;
 		offset.x = MAP_BLOCK;
 	}
-		ray->y = (player->pos.x - ray->x) * neg_tan + player->pos.y;
-		offset.y = -offset.x * neg_tan;
+	ray->y = (player->pos.x - ray->x) * neg_tan + player->pos.y;
+	offset.y = -offset.x * neg_tan;
 	return (cub_ray_loop(offset, ray, map, player));
 }
 
-static inline int	cub_wall_color(t_ray *ray)
-{
-	if (ray->vert_hit)
-	{
-		if (ray->angle > M_PI_2 && ray->angle < (3 * M_PI_2))
-			return (CYAN);
-		return (MAGENTA);
-	}
-	else
-	{
-		if (ray->angle > M_PI)
-			return (YELLOW);
-		return (BLACK);
-	}
-}
-
-void	cub_draw_walls(t_data *data, t_ray *ray, float dist)
-{
-	t_coord			pixel;
-	t_coord			res;
-	t_coord			offset;
-	int				color;
-	float			factor;
-	
-	res.y = WIN_HEIGHT * 16 / dist;
-	res.x = (short)((float)WIN_WIDTH / data->player->fow);
-	offset.x = res.x * ray->num;
-	offset.y = (WIN_HEIGHT - res.y) / 2;
-	color = cub_wall_color(ray);
-	factor = 0.2 * (-0.008 * dist);
-	printf ("%f\n", factor);
-	color = cub_adjust_brightness(color,  factor);
-	pixel.y = 0;
-	while (pixel.y < res.y)
-	{
-		pixel.x = 0;
-		while (pixel.x < res.x)
-		{
-			cub_draw_pixel(data->render, pixel.x + offset.x, pixel.y + offset.y, color);
-			pixel.x++;
-		}
-		pixel.y++;
-	}
-}
-
-float	cub_fix_fisheye(t_data *data, float ray_angle, float ray_dist)
-{
-	float	fish_angle;
-
-	// fish_angle = data->player->angle - ray_angle;
-	fish_angle = ray_angle - data->player->angle;
-	fish_angle += (fish_angle < 0) * (2 * M_PI);
-	fish_angle -= (fish_angle > 2 * M_PI) * (2 * M_PI);
-	return (ray_dist * cos(fish_angle));
-}
-
-void	cub_rays(t_player *player, t_map *map, t_image *image, t_data *data)
+void	cub_rays_n_walls(t_player *player, t_map *map, t_data *data)
 {
 	t_ray	ray;
+	float	angle_step;
 	float	fish_dist;
 
+	angle_step = DEG_TO_RAD * player->fow / player->res;
 	ray.angle = player->angle - DEG_TO_RAD * player->fow / 2;
 	ray.num = 0;
-	while (ray.num < player->fow)
+	// while (ray.num < player->fow)
+	while (ray.num < player->res)
 	{
 		ray.angle += (ray.angle < 0) * PI_TWICE - (ray.angle > PI_TWICE) * PI_TWICE;
 		ray.dist[HOR] = cub_ray_check_horizontal(player, map, &ray.hit[HOR], ray.angle);
@@ -161,10 +94,9 @@ void	cub_rays(t_player *player, t_map *map, t_image *image, t_data *data)
 		ray.vert_hit = ray.dist[VERT] < ray.dist[HOR];
 		fish_dist = cub_fix_fisheye(data, ray.angle, ray.dist[ray.dist[VERT] < ray.dist[HOR]]);
 		// ray.pos = ray.hit[ray.vert_hit];
-		cub_draw_walls(data, &ray, fish_dist);
-		// cub_draw_line(image, cub_pos_to_coord(player->pos), cub_pos_to_coord(ray_pos), GREEN);
-		ray.angle += DEG_TO_RAD;
+		cub_walls_draw(data, &ray, fish_dist);
+		// ray.angle += DEG_TO_RAD;
+		ray.angle += angle_step;
 		ray.num++;
 	}
-	(void)image;
 }
