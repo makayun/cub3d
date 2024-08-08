@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub_draw.c                                         :+:      :+:    :+:   */
+/*   cub_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:42:48 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/08 01:08:50 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/08 02:05:01 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	cub_draw_background(t_image *image)
 	}
 }
 
-void	cub_draw(t_data *data)
+void	cub_render(t_data *data)
 {
 	cub_draw_background(data->render);
 	cub_rays_n_walls(data->player, data->map, data);

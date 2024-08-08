@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:15 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/08 01:51:33 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/08 11:24:41 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,46 +20,6 @@ int	cub_exit(t_data *data)
 	free (data->mlx);
 	exit(EXIT_SUCCESS);
 	return (42);
-}
-
-void	cub_turn(int side, float turn_angle, t_player *player)
-{
-	if (side == LEFT)
-	{
-		player->angle -= turn_angle; 
-		if (player->angle < 0)
-			player->angle += 2 * M_PI;
-	}
-	else if (side == RIGHT)
-	{
-		player->angle += turn_angle;
-		if (player->angle > 2 * M_PI)
-			player->angle -= 2 * M_PI;
-	}
-	player->delta.x = cos(player->angle) * STEP;
-	player->delta.y = sin(player->angle) * STEP;
-}
-
-void	cub_step(int dir, t_player *player)
-{
-	player->pos.x += player->delta.x * (float)dir;
-	player->pos.y += player->delta.y * (float)dir;
-}
-
-void	cub_slide(int dir, t_player *player)
-{
-	if (dir == RIGHT)
-	{
-		cub_turn(RIGHT, M_PI_2, player);
-		cub_step(FORWARD, player);
-		cub_turn(LEFT, M_PI_2, player);
-	}
-	else if (dir == LEFT)
-	{
-		cub_turn(LEFT, M_PI_2, player);
-		cub_step(FORWARD, player);
-		cub_turn(RIGHT, M_PI_2, player);
-	}
 }
 
 int	cub_key_handle(int keysym, t_data *data)
@@ -83,11 +43,11 @@ int	cub_key_handle(int keysym, t_data *data)
 	else if (keysym == XK_minus)
 		data->player->fow = --data->player->fow + (data->player->fow < FOW_MIN);
 	else if (keysym == XK_p)
-		data->player->res *= 1.0 + (data->player->res < WIN_WIDTH);
+		data->player->res *= 1 + (data->player->res < RES_MAX);
 	else if (keysym == XK_o)
-		data->player->res /= 1.0 + (data->player->res > 4);
-	cub_draw(data);
-	printf ("Angle: %f, x: %f, y: %f, FOW: %d res: %d\n", data->player->angle, data->player->pos.x, data->player->pos.y, data->player->fow, data->player->res);
+		data->player->res /= 1 + (data->player->res > RES_MIN);
+	cub_render(data);
+	printf ("Angle: %f, x: %f, y: %f, FOW: %d, res: %d\n", data->player->angle, data->player->pos.x, data->player->pos.y, data->player->fow, data->player->res);
 	return (ALL_FINE);
 }
 
@@ -102,7 +62,7 @@ int	main()
 	data.render = &render;
 	data.map = &map;
 	cub_init(&data);
-	cub_draw(&data);
+	cub_render(&data);
 	mlx_hook(data.win, KeyPress, KeyPressMask, &cub_key_handle, &data);
 	mlx_hook(data.win, DestroyNotify, StructureNotifyMask, &cub_exit, &data);
 	mlx_loop(data.mlx);

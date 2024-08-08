@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/08 01:42:16 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/08 11:25:04 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@
 # define FOW_MAX	120
 # define FOW_MIN	4
 
+# define RES_MAX	WIN_WIDTH
+# define RES_MIN	4
+
 # define BLACK		0x0
 # define GRAY		0x00C0C0C0
 # define WHITE		0x00FFFFFF
@@ -82,8 +85,8 @@
 
 # define FORWARD	1
 # define BACKWARD	-1
-# define RIGHT		2
-# define LEFT		-2	
+# define RIGHT		1
+# define LEFT		-1	
 
 typedef struct s_coord {
 	short	x;
@@ -138,7 +141,10 @@ typedef struct s_data {
 }				t_data;
 
 void			cub_init(t_data *data);
-void			cub_draw(t_data *data);
+void			cub_render(t_data *data);
+void			cub_turn(int side, float turn_angle, t_player *player);
+void			cub_step(int dir, t_player *player);
+void			cub_slide(int dir, t_player *player);
 void			cub_draw_pixel(t_image *img, short x, short y, unsigned int color);
 void			cub_draw_map(t_data *data);
 void			cub_draw_line(t_image *image, t_coord start, t_coord end, int color);

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:38:09 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/08 01:19:22 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/08 11:37:13 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	cub_walls_draw(t_data *data, t_ray *ray, float dist)
 	int				color;
 	float			factor;
 	
-	res.y = WIN_HEIGHT * 16 / dist;
+	res.y = WIN_HEIGHT * 24 / (dist + sqrt(dist)) ;
 	res.x = (short)(WIN_WIDTH / data->player->res);
 	offset.x = res.x * ray->num;
 	offset.y = (WIN_HEIGHT - res.y) / 2;

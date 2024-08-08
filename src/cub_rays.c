@@ -85,7 +85,6 @@ void	cub_rays_n_walls(t_player *player, t_map *map, t_data *data)
 	angle_step = DEG_TO_RAD * player->fow / player->res;
 	ray.angle = player->angle - DEG_TO_RAD * player->fow / 2;
 	ray.num = 0;
-	// while (ray.num < player->fow)
 	while (ray.num < player->res)
 	{
 		ray.angle += (ray.angle < 0) * PI_TWICE - (ray.angle > PI_TWICE) * PI_TWICE;
