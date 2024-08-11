@@ -1,18 +1,18 @@
-#include <math.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "cub3d.h"
 
-
+typedef struct s_keys {
+	bool	w;
+	bool	a;
+	bool	s;
+	bool	d;
+	bool	la;
+	bool	ra;
+}				t_keys;
 
 int main()
 {
-    printf("t_pos %lu\n", sizeof(t_position)); // 8
-    printf("t_coord %lu\n", sizeof(t_coord)); // 8
-    printf("float[2] %lu\n", sizeof(float[2])); // 8
-    printf("pointer %lu\n", sizeof(void *)); // 8
-    printf("float %lu\n", sizeof(float)); // 4
-    printf("bool %lu\n", sizeof(short)); // 1
-    short x = 0 - 1;
-    printf("%d\n", x);
-} 
+    t_keys a;
+
+    printf("%lu\n", sizeof(&a));
+}

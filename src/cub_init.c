@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:41:00 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/10 09:01:49 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/11 21:23:20 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void	cub_init(t_data *data)
 	data->player->res = WIN_WIDTH;
 	data->render->back_colors[FLOOR] = MAGENTA;
 	data->render->back_colors[CEILING] = GRAY;
+	
 	cub_init_map(data);
 }

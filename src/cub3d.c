@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:15 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/11 03:38:59 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/11 19:42:02 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	cub_key_handle(int keysym, t_data *data)
 	else if (keysym == XK_Left)
 		cub_turn(LEFT, 0.1F, data->player);
 	else if (keysym == XK_w || keysym == XK_Up)
-		cub_step(FORWARD, data->player);
+		cub_step(FORWARD, data);
 	else if (keysym == XK_s || keysym == XK_Down)
-		cub_step(BACKWARD, data->player);
+		cub_step(BACKWARD, data);
 	else if (keysym == XK_d)
-		cub_slide(RIGHT, data->player);
+		cub_slide(RIGHT, data);
 	else if (keysym == XK_a)
-		cub_slide(LEFT, data->player);
+		cub_slide(LEFT, data);
 	else if (keysym == XK_equal)
 		data->player->fow = ++data->player->fow - (data->player->fow > FOW_MAX);
 	else if (keysym == XK_minus)
