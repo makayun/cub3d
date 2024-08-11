@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:42:48 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/08 02:05:01 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/09 22:17:56 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	cub_draw_background(t_image *image)
 void	cub_render(t_data *data)
 {
 	cub_draw_background(data->render);
-	cub_rays_n_walls(data->player, data->map, data);
 	cub_draw_map(data);
+	cub_rays_n_walls(data->player, data->map, data);
 	mlx_put_image_to_window(data->mlx, data->win, data->render->img, 0, 0);
 }

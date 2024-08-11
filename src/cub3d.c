@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:15 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/08 11:24:41 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/11 03:38:59 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ int	cub_key_handle(int keysym, t_data *data)
 	if (keysym == XK_Escape)
 		cub_exit(data);
 	else if (keysym == XK_Right)
-		cub_turn(RIGHT, 0.1, data->player);
+		cub_turn(RIGHT, 0.1F, data->player);
 	else if (keysym == XK_Left)
-		cub_turn(LEFT, 0.1, data->player);
+		cub_turn(LEFT, 0.1F, data->player);
 	else if (keysym == XK_w || keysym == XK_Up)
 		cub_step(FORWARD, data->player);
 	else if (keysym == XK_s || keysym == XK_Down)
 		cub_step(BACKWARD, data->player);
-	else if (keysym == XK_a)
-		cub_slide(LEFT, data->player);
 	else if (keysym == XK_d)
 		cub_slide(RIGHT, data->player);
+	else if (keysym == XK_a)
+		cub_slide(LEFT, data->player);
 	else if (keysym == XK_equal)
 		data->player->fow = ++data->player->fow - (data->player->fow > FOW_MAX);
 	else if (keysym == XK_minus)
@@ -46,6 +46,8 @@ int	cub_key_handle(int keysym, t_data *data)
 		data->player->res *= 1 + (data->player->res < RES_MAX);
 	else if (keysym == XK_o)
 		data->player->res /= 1 + (data->player->res > RES_MIN);
+	else if (keysym == XK_r)
+		data->map->draw_rays = !data->map->draw_rays;
 	cub_render(data);
 	printf ("Angle: %f, x: %f, y: %f, FOW: %d, res: %d\n", data->player->angle, data->player->pos.x, data->player->pos.y, data->player->fow, data->player->res);
 	return (ALL_FINE);

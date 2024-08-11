@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/08 11:25:04 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/10 07:38:30 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,22 @@
 # define DEG_TO_RAD 0.0174533
 # define PI_TWICE	M_PI*2
 
-# define WIN_WIDTH 1024
-# define WIN_HEIGHT 640
-
 # define FT_ERROR	-1
 # define ALL_FINE	1
+
 # define CEILING	0
 # define FLOOR		1
 # define HOR		0
 # define VERT		1
 
+# define WIN_WIDTH 1024
+# define WIN_HEIGHT 640
+
 # define MAP_BLOCK		16
 # define MAP_WIDTH_MAX	WIN_WIDTH/MAP_BLOCK
 # define MAP_HEIGHT_MAX	WIN_HEIGHT/MAP_BLOCK
 # define MAP_MAX		MAP_WIDTH_MAX*MAP_HEIGHT_MAX
+# define WALL_Y_Q		WIN_HEIGHT*MAP_BLOCK*1.5F
 # define STEP			MAP_BLOCK/4
 # define POINTER_LENGHT	MAP_BLOCK/2
 
@@ -104,6 +106,9 @@ typedef struct s_map {
 	unsigned short	y;
 	unsigned short	size;
 	unsigned short	shift;
+	unsigned short	width;
+	unsigned short	height;
+	bool			draw_rays;
 }				t_map;
 
 typedef struct s_ray {
