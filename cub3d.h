@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/11 21:26:13 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/12 22:26:28 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 640
 
-# define MAP_BLOCK		16
-# define MAP_WIDTH_MAX	WIN_WIDTH/MAP_BLOCK
-# define MAP_HEIGHT_MAX	WIN_HEIGHT/MAP_BLOCK
+# define BLOCK		16
+# define MAP_WIDTH_MAX	WIN_WIDTH/BLOCK
+# define MAP_HEIGHT_MAX	WIN_HEIGHT/BLOCK
 # define MAP_MAX		MAP_WIDTH_MAX*MAP_HEIGHT_MAX
-# define WALL_Y_Q		WIN_HEIGHT*MAP_BLOCK*1.5F
-# define STEP			MAP_BLOCK/4
-# define POINTER_LENGHT	MAP_BLOCK/2
+# define WALL_Y_Q		WIN_HEIGHT*BLOCK*1.5F
+# define STEP			BLOCK/4
+# define POINTER_LENGHT	BLOCK/2
 
 # define FOW_MAX	120
 # define FOW_MIN	4
@@ -92,23 +92,23 @@
 
 enum e_keys
 {
-	w,
-	s,
-	a,
-	d,
-	la,
-	ra
+	KEY_LA,
+	KEY_RA,
+	KEY_W,
+	KEY_S,
+	KEY_D,
+	KEY_A,
 };
 
 typedef struct s_coord {
-	short	x;
-	short	y;
+	short			x;
+	short			y;
 }				t_coord;
 
 typedef struct s_position {
-	float	x;
-	float	y;
-}				t_position;
+	float			x;
+	float			y;
+}				t_pos;
 
 typedef struct s_map {
 	bool			map[MAP_MAX];
@@ -116,62 +116,67 @@ typedef struct s_map {
 	unsigned short	y;
 	unsigned short	size;
 	unsigned short	shift;
-	unsigned short	width;
-	unsigned short	height;
+	unsigned short	w;
+	unsigned short	h;
 	bool			draw_rays;
 }				t_map;
 
 typedef struct s_ray {
-	t_position	hit[2];
-	t_position	pos;
-	float		dist[2];
-	float		angle;
-	short		num;
-	bool		vert_hit;
+	t_pos			hit[2];
+	t_pos			pos;
+	float			dist[2];
+	float			angle;
+	short			num;
+	bool			vert_hit;
 }				t_ray;
 
 typedef struct s_player {
-	t_position		pos;
-	t_position		delta;
+	t_pos			pos;
+	t_pos			delta;
 	float			angle;
 	short			fow;
 	short			res;
 }				t_player;
 
 typedef struct s_image {
-    void	*img;
-    char	*addr;
-	int		back_colors[2];
-    int		bpp;
-    int		line_len;
-    int		endian;
+    void			*img;
+    char			*addr;
+	int				back_colors[2];
+    int				bpp;
+    int				line_len;
+    int				endian;
 }				t_image;
 
 typedef struct s_data {
-	void		*mlx;
-	void		*win;
-	t_image		*render;
-	t_player	*player;
-	t_map		*map;
-	bool		keys[6];
+	void			*mlx;
+	void			*win;
+	t_image			*render;
+	t_player		*player;
+	t_map			*map;
+	bool			keys[6];
 }				t_data;
 
 void			cub_init(t_data *data);
-void			cub_render(t_data *data);
+int				cub_exit(t_data *data);
+int				cub_key_press(int keysym, t_data *data);
+void			cub_key_hold(int keysym, t_data *data);
+int				cub_key_release(int keysym, t_data *data);
+void			cub_movement_update(t_data *data);
 void			cub_turn(int side, float turn_angle, t_player *player);
 void			cub_step(int dir, t_data *data);
 void			cub_slide(int dir, t_data *data);
+void			cub_render(t_data *data);
 void			cub_draw_pixel(t_image *img, short x, short y, unsigned int color);
 void			cub_draw_map(t_data *data);
 void			cub_draw_line(t_image *image, t_coord start, t_coord end, int color);
 void			cub_rays_n_walls(t_player *player, t_map *map, t_data *data);
-t_coord			cub_pos_to_coord(t_position pos);
+t_coord			cub_pos_to_coord(t_pos pos);
 void			cub_tool_coord_norm(short *x, short *y);
-float			cub_dist(t_position a, t_position b);
+float			cub_dist(t_pos a, t_pos b);
 unsigned int	cub_adjust_brightness(int color, float factor);
 float			cub_gradient(float frow);
-t_coord			cub_pos_to_coord(t_position pos);
+t_coord			cub_pos_to_coord(t_pos pos);
 void			cub_walls_draw(t_data *data, t_ray *ray, float dist);
-float			cub_fix_fisheye(t_data *data, float ray_angle, float ray_dist);
+float			cub_fisheye(t_data *data, float ray_angle, float ray_dist);
 
 #endif

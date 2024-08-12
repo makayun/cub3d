@@ -12,7 +12,18 @@ typedef struct s_keys {
 
 int main()
 {
-    t_keys a;
+	bool	map[] ={1,1,1,1,
+					1,0,0,1,
+					1,1,1,1};
+	int		x = 4;
+	int		y = 3;
+	// int		size = x * y;
 
-    printf("%lu\n", sizeof(&a));
+	int		px = 0;
+	int		py = 1;
+
+	int pos = (py * x + px); 
+	printf ("%d\n", (int)map[pos]);
+
+
 }

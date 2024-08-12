@@ -1,102 +1,104 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub_rays_n_walls.c                                         :+:      :+:    :+:   */
+/*   cub_rays.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/04 13:12:36 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/07 23:16:56 by maxmakagono      ###   ########.fr       */
+/*   Created: 2024/08/12 07:18:41 by maxmakagono       #+#    #+#             */
+/*   Updated: 2024/08/12 09:19:19 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-float	cub_ray_loop(t_position offset, t_position *ray, t_map *map, t_player *player)
+float	cub_r_loop(t_pos offset, t_pos *r, t_map *map, t_player *player)
 {
 	t_coord			m;
 	unsigned int	mp;
 
 	while (1)
 	{
-		m.x = (int)(ray->x) >> map->shift;
-		m.y = (int)(ray->y) >> map->shift;
+		m.x = (int)(r->x) >> map->shift;
+		m.y = (int)(r->y) >> map->shift;
 		mp = m.y * map->x + m.x;
 		if (m.x < 0 || m.x >= (int)map->x || m.y < 0 || m.y >= (int)map->y)
 			return (INT_MAX);
 		else if (mp < map->size && map->map[mp] == 1)
-			return (cub_dist(player->pos, *ray));
+			return (cub_dist(player->pos, *r));
 		else
 		{
-			ray->x += offset.x;
-			ray->y += offset.y;
+			r->x += offset.x;
+			r->y += offset.y;
 		}
 	}
 }
 
-float	cub_ray_check_horizontal(t_player *player, t_map *map, t_position *ray, float ray_angle)
+float	cub_ray_hit_hor(t_player *player, t_map *map, t_pos *r, float r_angle)
 {
-	t_position	offset;
-	float		a_tan;
+	t_pos	offset;
+	float	a_tan;
 
-	a_tan = -1/tan(ray_angle);
-	if (ray_angle > M_PI)
+	a_tan = -1 / tan(r_angle);
+	if (r_angle >= M_PI)
 	{
-		ray->y = (((int)player->pos.y >> map->shift) << map->shift) - 0.0001F;
-		offset.y = -MAP_BLOCK;
+		r->y = (((int)player->pos.y >> map->shift) << map->shift) - 0.0001F;
+		offset.y = -BLOCK;
 	}
-	else if (ray_angle < M_PI)
+	else
 	{
-		ray->y = (((int)player->pos.y >> map->shift) << map->shift) + MAP_BLOCK;
-		offset.y = MAP_BLOCK;
+		r->y = (((int)player->pos.y >> map->shift) << map->shift) + BLOCK;
+		offset.y = BLOCK;
 	}
-	ray->x = (player->pos.y - ray->y) * a_tan + player->pos.x;
+	r->x = (player->pos.y - r->y) * a_tan + player->pos.x;
 	offset.x = -offset.y * a_tan;
-	return (cub_ray_loop(offset, ray, map, player));
+	return (cub_r_loop(offset, r, map, player));
 }
 
-float	cub_ray_check_vertical(t_player *player, t_map *map, t_position *ray, float ray_angle)
+float	cub_ray_hit_vert(t_player *player, t_map *map, t_pos *r, float r_angle)
 {
-	t_position	offset;
+	t_pos		offset;
 	float		neg_tan;
 
-	neg_tan = -tan(ray_angle);
-	if (ray_angle > M_PI_2 && ray_angle < (3 * M_PI_2))
+	neg_tan = -tan(r_angle);
+	if (r_angle > M_PI_2 && r_angle < (3 * M_PI_2))
 	{
-		ray->x = (((int)player->pos.x >> map->shift) << map->shift) - 0.0001F;
-		offset.x = -MAP_BLOCK;
+		r->x = (((int)player->pos.x >> map->shift) << map->shift) - 0.0001F;
+		offset.x = -BLOCK;
 	}
-	else if (ray_angle < M_PI_2 || ray_angle > (3 * M_PI_2))
+	else if (r_angle < M_PI_2 || r_angle > (3 * M_PI_2))
 	{
-		ray->x = (((int)player->pos.x >> map->shift) << map->shift) + MAP_BLOCK;
-		offset.x = MAP_BLOCK;
+		r->x = (((int)player->pos.x >> map->shift) << map->shift) + BLOCK;
+		offset.x = BLOCK;
 	}
-	ray->y = (player->pos.x - ray->x) * neg_tan + player->pos.y;
+	r->y = (player->pos.x - r->x) * neg_tan + player->pos.y;
 	offset.y = -offset.x * neg_tan;
-	return (cub_ray_loop(offset, ray, map, player));
+	return (cub_r_loop(offset, r, map, player));
 }
 
 void	cub_rays_n_walls(t_player *player, t_map *map, t_data *data)
 {
-	t_ray	ray;
+	t_ray	r;
 	float	angle_step;
 	float	fish_dist;
 
 	angle_step = DEG_TO_RAD * player->fow / player->res;
-	ray.angle = player->angle - DEG_TO_RAD * player->fow / 2;
-	ray.num = 0;
-	while (ray.num < player->res)
+	r.angle = player->angle - DEG_TO_RAD * player->fow / 2;
+	r.num = 0;
+	while (r.num < player->res)
 	{
-		ray.angle += (ray.angle < 0) * PI_TWICE - (ray.angle > PI_TWICE) * PI_TWICE;
-		ray.dist[HOR] = cub_ray_check_horizontal(player, map, &ray.hit[HOR], ray.angle);
-		ray.dist[VERT] = cub_ray_check_vertical(player, map, &ray.hit[VERT], ray.angle);
-		ray.vert_hit = ray.dist[VERT] < ray.dist[HOR];
-		fish_dist = cub_fix_fisheye(data, ray.angle, ray.dist[ray.dist[VERT] < ray.dist[HOR]]);
-		cub_walls_draw(data, &ray, fish_dist);
-		ray.pos = ray.hit[ray.vert_hit];
+		r.angle += (r.angle < 0) * PI_TWICE - (r.angle > PI_TWICE) * PI_TWICE;
+		r.dist[HOR] = cub_ray_hit_hor(player, map, &r.hit[HOR], r.angle);
+		r.dist[VERT] = cub_ray_hit_vert(player, map, &r.hit[VERT], r.angle);
+		r.vert_hit = r.dist[VERT] < r.dist[HOR];
+		fish_dist = cub_fisheye(data, r.angle,
+				r.dist[r.dist[VERT] < r.dist[HOR]]);
+		cub_walls_draw(data, &r, fish_dist);
+		r.pos = r.hit[r.vert_hit];
 		if (map->draw_rays)
-			cub_draw_line(data->render, cub_pos_to_coord(player->pos), cub_pos_to_coord(ray.pos), GREEN);
-		ray.angle += angle_step;
-		ray.num++;
+			cub_draw_line(data->render, cub_pos_to_coord(player->pos),
+				cub_pos_to_coord(r.pos), GREEN);
+		r.angle += angle_step;
+		r.num++;
 	}
 }
