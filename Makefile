@@ -21,6 +21,7 @@ SRCS = $(wildcard src/*.c) $(wildcard src/*/*.c)
 
 OBJS_DIR = ./obj/
 OBJS = $(addprefix obj/,$(notdir $(SRCS:.c=.o)))
+# OBJS = $(patsubst $(SRCS_DIR)%.c, $(OBJS_DIR)%.o, $(SRCS))
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 	@mkdir -p $(OBJS_DIR)

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:42:48 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/09 22:17:56 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/13 09:26:57 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ inline void	cub_draw_pixel(t_image *img, short x, short y, unsigned int color)
 	*(int *)pixel = color;
 }
 
-void	cub_draw_background(t_image *image)
+void	cub_draw_background(t_image *image, int *colors)
 {
 	float			gradient;
 	unsigned int	color;
@@ -34,7 +34,7 @@ void	cub_draw_background(t_image *image)
 	while (y < WIN_HEIGHT)
 	{
 		gradient = fabs(((float)y + (-WIN_HEIGHT * (y <= mid))) / mid) / 2;
-		color = cub_adjust_brightness(image->back_colors[y >= mid], gradient);
+		color = cub_adjust_brightness(colors[y >= mid], gradient);
 		x = 0;
 		while (x < WIN_WIDTH)
 		{
@@ -47,7 +47,7 @@ void	cub_draw_background(t_image *image)
 
 void	cub_render(t_data *data)
 {
-	cub_draw_background(data->render);
+	cub_draw_background(data->render, data->map->back_colors);
 	cub_draw_map(data);
 	cub_rays_n_walls(data->player, data->map, data);
 	mlx_put_image_to_window(data->mlx, data->win, data->render->img, 0, 0);

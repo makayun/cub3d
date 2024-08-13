@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:18:41 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/12 09:19:19 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/13 09:07:43 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,18 @@ float	cub_ray_hit_hor(t_player *player, t_map *map, t_pos *r, float r_angle)
 	float	a_tan;
 
 	a_tan = -1 / tan(r_angle);
-	if (r_angle >= M_PI)
+	if (r_angle > M_PI)
 	{
 		r->y = (((int)player->pos.y >> map->shift) << map->shift) - 0.0001F;
 		offset.y = -BLOCK;
 	}
-	else
+	else if (r_angle < M_PI)
 	{
 		r->y = (((int)player->pos.y >> map->shift) << map->shift) + BLOCK;
 		offset.y = BLOCK;
 	}
+	else
+		return (INT_MAX);
 	r->x = (player->pos.y - r->y) * a_tan + player->pos.x;
 	offset.x = -offset.y * a_tan;
 	return (cub_r_loop(offset, r, map, player));
@@ -71,6 +73,8 @@ float	cub_ray_hit_vert(t_player *player, t_map *map, t_pos *r, float r_angle)
 		r->x = (((int)player->pos.x >> map->shift) << map->shift) + BLOCK;
 		offset.x = BLOCK;
 	}
+	else
+		return (INT_MAX);
 	r->y = (player->pos.x - r->x) * neg_tan + player->pos.y;
 	offset.y = -offset.x * neg_tan;
 	return (cub_r_loop(offset, r, map, player));

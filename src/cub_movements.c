@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:23:40 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/12 22:36:00 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/13 00:47:14 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,24 @@ void	cub_turn(int side, float turn_angle, t_player *player)
 	player->delta.y = sin(player->angle) * STEP;
 }
 
-// void	cub_step(int dir, t_data *data)
-// {
-// 	data->player->pos.x += data->player->delta.x * (float)dir;
-// 	data->player->pos.y += data->player->delta.y * (float)dir;
-// }
-
 void	cub_step(int dir, t_data *data)
 {
 	t_pos	new_pos;
 	t_coord	m;
+	int		try[2];
 
 	new_pos = data->player->pos;
-	new_pos.x += data->player->delta.x * (float)dir * 3;
+	new_pos.x += data->player->delta.x * (float)dir * 2;
 	m.x = (int)new_pos.x / BLOCK;
 	m.y = (int)data->player->pos.y / BLOCK;
-	if (data->map->map[m.y * data->map->x + m.x] == 0)
-		data->player->pos.x += data->player->delta.x * (float)dir;
+	try[HOR] = (data->map->map[m.y * data->map->x + m.x] == 0);
 	new_pos = data->player->pos;
-	new_pos.y += data->player->delta.y * (float)dir * 3;
+	new_pos.y += data->player->delta.y * (float)dir * 2;
 	m.y = (int)new_pos.y / BLOCK;
 	m.x = (int)data->player->pos.x / BLOCK;
-	if (data->map->map[m.y * data->map->x + m.x] == 0)
-		data->player->pos.y += data->player->delta.y * (float)dir;
+	try[VERT] = (data->map->map[m.y * data->map->x + m.x] == 0);
+	data->player->pos.x += try[HOR] * data->player->delta.x * (float)dir;
+	data->player->pos.y += try[VERT] * data->player->delta.y * (float)dir;
 }
 
 void	cub_slide(int dir, t_data *data)

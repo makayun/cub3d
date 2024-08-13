@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/12 22:26:28 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/13 09:48:44 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,14 @@ enum e_keys
 	KEY_A,
 };
 
+enum e_sides
+{
+	EAST,
+	NORTH,
+	WEST,
+	SOUTH
+};
+
 typedef struct s_coord {
 	short			x;
 	short			y;
@@ -112,6 +120,7 @@ typedef struct s_position {
 
 typedef struct s_map {
 	bool			map[MAP_MAX];
+	int				back_colors[2];
 	unsigned short	x;
 	unsigned short	y;
 	unsigned short	size;
@@ -141,11 +150,17 @@ typedef struct s_player {
 typedef struct s_image {
     void			*img;
     char			*addr;
-	int				back_colors[2];
     int				bpp;
     int				line_len;
     int				endian;
 }				t_image;
+
+typedef struct s_assets {
+	t_image			east;
+	t_image			nord;
+	t_image			west;
+	t_image			south;
+}				t_assets;
 
 typedef struct s_data {
 	void			*mlx;
@@ -153,30 +168,40 @@ typedef struct s_data {
 	t_image			*render;
 	t_player		*player;
 	t_map			*map;
+	t_assets		*assets;
 	bool			keys[6];
 }				t_data;
 
-void			cub_init(t_data *data);
+int				cub_check_input(int argc, char *filename);
 int				cub_exit(t_data *data);
+
+void			cub_init(char **argv, t_data *data);
+int				cub_parse(char **argv, t_data *data);
+void			cub_init_map(t_data *data);
+void			cub_init_player(t_data *data);
+void			cub_init_images(t_data *data);
+
 int				cub_key_press(int keysym, t_data *data);
 void			cub_key_hold(int keysym, t_data *data);
 int				cub_key_release(int keysym, t_data *data);
+
 void			cub_movement_update(t_data *data);
 void			cub_turn(int side, float turn_angle, t_player *player);
 void			cub_step(int dir, t_data *data);
 void			cub_slide(int dir, t_data *data);
+
 void			cub_render(t_data *data);
 void			cub_draw_pixel(t_image *img, short x, short y, unsigned int color);
 void			cub_draw_map(t_data *data);
 void			cub_draw_line(t_image *image, t_coord start, t_coord end, int color);
+
 void			cub_rays_n_walls(t_player *player, t_map *map, t_data *data);
-t_coord			cub_pos_to_coord(t_pos pos);
-void			cub_tool_coord_norm(short *x, short *y);
 float			cub_dist(t_pos a, t_pos b);
+void			cub_walls_draw(t_data *data, t_ray *ray, float dist);
+
 unsigned int	cub_adjust_brightness(int color, float factor);
+float			cub_fisheye(t_data *data, float ray_angle, float ray_dist);
 float			cub_gradient(float frow);
 t_coord			cub_pos_to_coord(t_pos pos);
-void			cub_walls_draw(t_data *data, t_ray *ray, float dist);
-float			cub_fisheye(t_data *data, float ray_angle, float ray_dist);
-
+void			cub_tool_coord_norm(short *x, short *y);
 #endif
