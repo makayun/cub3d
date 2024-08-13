@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_rays.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
+/*   By: mmakagon <mmakagon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:18:41 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/13 09:07:43 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/13 11:29:12 by mmakagon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ float	cub_r_loop(t_pos offset, t_pos *r, t_map *map, t_player *player)
 		m.y = (int)(r->y) >> map->shift;
 		mp = m.y * map->x + m.x;
 		if (m.x < 0 || m.x >= (int)map->x || m.y < 0 || m.y >= (int)map->y)
-			return (INT_MAX);
+			return ((float)INT_MAX);
 		else if (mp < map->size && map->map[mp] == 1)
 			return (cub_dist(player->pos, *r));
 		else
@@ -51,7 +51,7 @@ float	cub_ray_hit_hor(t_player *player, t_map *map, t_pos *r, float r_angle)
 		offset.y = BLOCK;
 	}
 	else
-		return (INT_MAX);
+		return ((float)INT_MAX);
 	r->x = (player->pos.y - r->y) * a_tan + player->pos.x;
 	offset.x = -offset.y * a_tan;
 	return (cub_r_loop(offset, r, map, player));
@@ -74,7 +74,7 @@ float	cub_ray_hit_vert(t_player *player, t_map *map, t_pos *r, float r_angle)
 		offset.x = BLOCK;
 	}
 	else
-		return (INT_MAX);
+		return ((float)INT_MAX);
 	r->y = (player->pos.x - r->x) * neg_tan + player->pos.y;
 	offset.y = -offset.x * neg_tan;
 	return (cub_r_loop(offset, r, map, player));
