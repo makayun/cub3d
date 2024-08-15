@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/13 09:48:44 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/14 16:08:31 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stddef.h>
 # include <stdbool.h>
 # include <math.h>
+# include <sys/time.h>
 # include "./mlx/mlx.h"
 # include "./libft/libft.h"
 # include <X11/X.h>
@@ -39,11 +40,12 @@
 	// M_2_SQRTPI 2 / sqrt(pi)
 	// M_SQRT2   sqrt(2)
 	// M_SQRT1_2 sqrt(1/2)
-	
-# define DEG_TO_RAD 0.0174533
-# define PI_TWICE	M_PI*2
 
-# define CUB_ERROR	-1
+# define DEG_TO_RAD 0.0174533
+# define PI_TWICE	6.28318530718
+
+# define CUB_ERROR -1
+# define NOT_YET	0
 # define ALL_FINE	1
 
 # define CEILING	0
@@ -51,16 +53,26 @@
 # define HOR		0
 # define VERT		1
 
-# define WIN_WIDTH 1024
-# define WIN_HEIGHT 640
+# define WIN_WIDTH	1024
+# define WIN_HEIGHT	640
 
 # define BLOCK		16
-# define MAP_WIDTH_MAX	WIN_WIDTH/BLOCK
-# define MAP_HEIGHT_MAX	WIN_HEIGHT/BLOCK
-# define MAP_MAX		MAP_WIDTH_MAX*MAP_HEIGHT_MAX
-# define WALL_Y_Q		WIN_HEIGHT*BLOCK*1.5F
-# define STEP			BLOCK/4
-# define POINTER_LENGHT	BLOCK/2
+
+enum e_map_constants
+{
+	MAP_WIDTH_MAX =		WIN_WIDTH/BLOCK,
+	MAP_HEIGHT_MAX =	WIN_HEIGHT/BLOCK,
+	MAP_MAX =			MAP_WIDTH_MAX*MAP_HEIGHT_MAX,
+	WALL_Y_Q =			WIN_HEIGHT*BLOCK/2*3,
+	STEP =				BLOCK/8,
+	POINTER_LENGHT =	BLOCK/2,
+};
+
+enum e_fps
+{
+	FPS =			30,
+	FRAME_TIME =	1000000 / FPS,
+};
 
 # define FOW_MAX	120
 # define FOW_MIN	4
@@ -86,9 +98,9 @@
 # define ANSI_CYAN		"\001\e[36m\002"
 
 # define FORWARD	1
-# define BACKWARD	-1
+# define BACKWARD  -1
 # define RIGHT		1
-# define LEFT		-1
+# define LEFT	   -1
 
 enum e_keys
 {
@@ -108,17 +120,20 @@ enum e_sides
 	SOUTH
 };
 
-typedef struct s_coord {
+typedef struct s_coord
+{
 	short			x;
 	short			y;
 }				t_coord;
 
-typedef struct s_position {
+typedef struct s_position
+{
 	float			x;
 	float			y;
 }				t_pos;
 
-typedef struct s_map {
+typedef struct s_map
+{
 	bool			map[MAP_MAX];
 	int				back_colors[2];
 	unsigned short	x;
@@ -130,7 +145,8 @@ typedef struct s_map {
 	bool			draw_rays;
 }				t_map;
 
-typedef struct s_ray {
+typedef struct s_ray
+{
 	t_pos			hit[2];
 	t_pos			pos;
 	float			dist[2];
@@ -139,7 +155,8 @@ typedef struct s_ray {
 	bool			vert_hit;
 }				t_ray;
 
-typedef struct s_player {
+typedef struct s_player
+{
 	t_pos			pos;
 	t_pos			delta;
 	float			angle;
@@ -147,61 +164,66 @@ typedef struct s_player {
 	short			res;
 }				t_player;
 
-typedef struct s_image {
-    void			*img;
-    char			*addr;
-    int				bpp;
-    int				line_len;
-    int				endian;
+typedef struct s_image
+{
+	void			*img;
+	char			*addr;
+	int				bpp;
+	int				line_len;
+	int				endian;
 }				t_image;
 
-typedef struct s_assets {
+typedef struct s_assets
+{
 	t_image			east;
 	t_image			nord;
 	t_image			west;
 	t_image			south;
 }				t_assets;
 
-typedef struct s_data {
+typedef struct s_data
+{
 	void			*mlx;
 	void			*win;
 	t_image			*render;
 	t_player		*player;
 	t_map			*map;
 	t_assets		*assets;
+	long			next_frame;
 	bool			keys[6];
 }				t_data;
 
-int				cub_check_input(int argc, char *filename);
-int				cub_exit(t_data *data);
+long	cub_current_time(void);
+int		cub_check_input(int argc, char *filename);
+int		cub_exit(t_data *data);
 
-void			cub_init(char **argv, t_data *data);
-int				cub_parse(char **argv, t_data *data);
-void			cub_init_map(t_data *data);
-void			cub_init_player(t_data *data);
-void			cub_init_images(t_data *data);
+void	cub_init(char **argv, t_data *data);
+int		cub_parse(char **argv, t_data *data);
+void	cub_init_map(t_data *data);
+void	cub_init_player(t_data *data);
+void	cub_init_images(t_data *data);
 
-int				cub_key_press(int keysym, t_data *data);
-void			cub_key_hold(int keysym, t_data *data);
-int				cub_key_release(int keysym, t_data *data);
+int		cub_key_press(int keysym, t_data *data);
+void	cub_key_hold(int keysym, t_data *data);
+int		cub_key_release(int keysym, t_data *data);
 
-void			cub_movement_update(t_data *data);
-void			cub_turn(int side, float turn_angle, t_player *player);
-void			cub_step(int dir, t_data *data);
-void			cub_slide(int dir, t_data *data);
+void	cub_movement_update(t_data *data);
+void	cub_turn(int side, float turn_angle, t_player *player);
+void	cub_step(int dir, t_data *data);
+void	cub_slide(int dir, t_data *data);
 
-void			cub_render(t_data *data);
-void			cub_draw_pixel(t_image *img, short x, short y, unsigned int color);
-void			cub_draw_map(t_data *data);
-void			cub_draw_line(t_image *image, t_coord start, t_coord end, int color);
+int		cub_render(t_data *data);
+void	cub_draw_pixel(t_image *img, short x, short y, unsigned int color);
+void	cub_draw_map(t_data *data);
+void	cub_draw_line(t_image *image, t_coord start, t_coord end, int color);
 
-void			cub_rays_n_walls(t_player *player, t_map *map, t_data *data);
-float			cub_dist(t_pos a, t_pos b);
-void			cub_walls_draw(t_data *data, t_ray *ray, float dist);
+void	cub_rays_n_walls(t_player *player, t_map *map, t_data *data);
+float	cub_dist(t_pos a, t_pos b);
+void	cub_walls_draw(t_data *data, t_ray *ray, float dist);
 
-unsigned int	cub_adjust_brightness(int color, float factor);
-float			cub_fisheye(t_data *data, float ray_angle, float ray_dist);
-float			cub_gradient(float frow);
-t_coord			cub_pos_to_coord(t_pos pos);
-void			cub_tool_coord_norm(short *x, short *y);
+int		cub_adjust_brightness(int color, float factor);
+float	cub_fisheye(t_data *data, float ray_angle, float ray_dist);
+float	cub_gradient(float frow);
+t_coord	cub_pos_to_coord(t_pos pos);
+void	cub_tool_coord_norm(short *x, short *y);
 #endif

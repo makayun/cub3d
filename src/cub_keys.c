@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:00:21 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/12 19:52:46 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/14 10:53:42 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int	cub_key_press(int keysym, t_data *data)
 		data->map->draw_rays = !data->map->draw_rays;
 	else
 		cub_key_hold(keysym, data);
-	cub_movement_update(data);
-	cub_render(data);
-	printf ("Angle: %f, x: %f, y: %f, FOW: %d, res: %d\n",
+	printf ("\nAngle: %f, x: %f, y: %f, FOW: %d, res: %d\n",
 		data->player->angle, data->player->pos.x, data->player->pos.y,
 		data->player->fow, data->player->res);
-	printf ("Coord: x: %d, y: %d\n", ((int)data->player->pos.x / BLOCK), ((int)data->player->pos.y / BLOCK));
+	printf ("Coord: x: %d, y: %d\n",
+		((int)data->player->pos.x / BLOCK),
+		((int)data->player->pos.y / BLOCK));
 	return (ALL_FINE);
 }
 

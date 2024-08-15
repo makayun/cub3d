@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:15 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/13 09:49:36 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/14 11:20:05 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ int	main(int argc, char **argv)
 	data.map = &map;
 	data.assets = &assets;
 	cub_init(argv, &data);
+	data.next_frame = cub_current_time();
 	cub_render(&data);
 	mlx_hook(data.win, KeyPress, KeyPressMask, &cub_key_press, &data);
 	mlx_key_hook(data.win, &cub_key_release, &data);
 	mlx_hook(data.win, DestroyNotify, StructureNotifyMask, &cub_exit, &data);
+	mlx_loop_hook(data.mlx, &cub_render, &data);
 	mlx_loop(data.mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:38:09 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/12 08:49:05 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/14 10:12:47 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static inline int	cub_wall_color(t_ray *ray)
 	{
 		if (ray->angle > M_PI)
 			return (YELLOW);
-		return (GRAY);
+		return (WHITE);
 	}
 }
 

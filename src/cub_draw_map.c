@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 00:28:26 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/12 09:15:31 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/14 15:59:11 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	cub_draw_line(t_image *image, t_coord start, t_coord end, int color)
 	int		err;
 	int		e2;
 
-	cub_tool_coord_norm(&start.x, &start.y);
-	cub_tool_coord_norm(&end.x, &end.y);
 	dlt.x = abs(end.x - start.x);
 	dlt.y = abs(end.y - start.y);
 	step.x = 1 - 2 * (start.x > end.x);
@@ -50,16 +48,9 @@ void	cub_draw_line(t_image *image, t_coord start, t_coord end, int color)
 		if (start.x == end.x && start.y == end.y)
 			break ;
 		e2 = err;
-		if (e2 > -dlt.x)
-		{
-			err -= dlt.y;
-			start.x += step.x;
-		}
-		if (e2 < dlt.y)
-		{
-			err += dlt.x;
-			start.y += step.y;
-		}
+		err += (e2 > -dlt.x) * -dlt.y + (e2 < dlt.y) * dlt.x;
+		start.x += (e2 > -dlt.x) * step.x;
+		start.y += (e2 < dlt.y) * step.y;
 	}
 }
 
@@ -80,11 +71,9 @@ void	cub_draw_player(t_data *data)
 void	cub_draw_map(t_data *data)
 {
 	unsigned int	i;
-	int				color[2];
+	const int		color[2] = {BLACK, GRAY};
 	t_coord			coord;
 
-	color[0] = BLACK;
-	color[1] = GRAY;
 	i = 0;
 	while (i < data->map->size)
 	{

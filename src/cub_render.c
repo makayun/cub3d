@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:42:48 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/13 09:26:57 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/14 16:03:41 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ void	cub_draw_background(t_image *image, int *colors)
 {
 	float			gradient;
 	unsigned int	color;
-	int				mid;
+	const int		mid = WIN_HEIGHT / 2 - 1;
 	int				x;
 	int				y;
 
-	mid = WIN_HEIGHT / 2 - 1;
 	y = 0;
 	while (y < WIN_HEIGHT)
 	{
@@ -45,10 +44,19 @@ void	cub_draw_background(t_image *image, int *colors)
 	}
 }
 
-void	cub_render(t_data *data)
+int	cub_render(t_data *data)
 {
-	cub_draw_background(data->render, data->map->back_colors);
-	cub_draw_map(data);
-	cub_rays_n_walls(data->player, data->map, data);
-	mlx_put_image_to_window(data->mlx, data->win, data->render->img, 0, 0);
+	const long	current_time = cub_current_time();
+
+	if (current_time >= data->next_frame)
+	{
+		cub_movement_update(data);
+		cub_draw_background(data->render, data->map->back_colors);
+		cub_draw_map(data);
+		cub_rays_n_walls(data->player, data->map, data);
+		mlx_put_image_to_window(data->mlx, data->win, data->render->img, 0, 0);
+		data->next_frame = current_time + FRAME_TIME;
+		return (ALL_FINE);
+	}
+	return (NOT_YET);
 }

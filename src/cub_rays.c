@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_rays.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakagon <mmakagon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:18:41 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/13 11:29:12 by mmakagon         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:46:01 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,9 @@ float	cub_r_loop(t_pos offset, t_pos *r, t_map *map, t_player *player)
 
 float	cub_ray_hit_hor(t_player *player, t_map *map, t_pos *r, float r_angle)
 {
-	t_pos	offset;
-	float	a_tan;
+	t_pos		offset;
+	const float	a_tan = -1 / tan(r_angle);
 
-	a_tan = -1 / tan(r_angle);
 	if (r_angle > M_PI)
 	{
 		r->y = (((int)player->pos.y >> map->shift) << map->shift) - 0.0001F;
@@ -60,9 +59,8 @@ float	cub_ray_hit_hor(t_player *player, t_map *map, t_pos *r, float r_angle)
 float	cub_ray_hit_vert(t_player *player, t_map *map, t_pos *r, float r_angle)
 {
 	t_pos		offset;
-	float		neg_tan;
+	const float	neg_tan = -tan(r_angle);
 
-	neg_tan = -tan(r_angle);
 	if (r_angle > M_PI_2 && r_angle < (3 * M_PI_2))
 	{
 		r->x = (((int)player->pos.x >> map->shift) << map->shift) - 0.0001F;
@@ -82,11 +80,10 @@ float	cub_ray_hit_vert(t_player *player, t_map *map, t_pos *r, float r_angle)
 
 void	cub_rays_n_walls(t_player *player, t_map *map, t_data *data)
 {
-	t_ray	r;
-	float	angle_step;
-	float	fish_dist;
+	t_ray		r;
+	float		fish_dist;
+	const float	angle_step = DEG_TO_RAD * player->fow / player->res;
 
-	angle_step = DEG_TO_RAD * player->fow / player->res;
 	r.angle = player->angle - DEG_TO_RAD * player->fow / 2;
 	r.num = 0;
 	while (r.num < player->res)

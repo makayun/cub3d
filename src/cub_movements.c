@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:23:40 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/13 00:47:14 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/15 01:56:59 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	cub_step(int dir, t_data *data)
 	int		try[2];
 
 	new_pos = data->player->pos;
-	new_pos.x += data->player->delta.x * (float)dir * 2;
+	new_pos.x += data->player->delta.x * (float)dir * 2.0F;
 	m.x = (int)new_pos.x / BLOCK;
 	m.y = (int)data->player->pos.y / BLOCK;
 	try[HOR] = (data->map->map[m.y * data->map->x + m.x] == 0);
 	new_pos = data->player->pos;
-	new_pos.y += data->player->delta.y * (float)dir * 2;
+	new_pos.y += data->player->delta.y * (float)dir * 2.0F;
 	m.y = (int)new_pos.y / BLOCK;
 	m.x = (int)data->player->pos.x / BLOCK;
 	try[VERT] = (data->map->map[m.y * data->map->x + m.x] == 0);
@@ -53,9 +53,9 @@ void	cub_slide(int dir, t_data *data)
 void	cub_movement_update(t_data *data)
 {
 	if (data->keys[KEY_RA])
-		cub_turn(RIGHT, 0.1F, data->player);
+		cub_turn(RIGHT, 0.05F, data->player);
 	if (data->keys[KEY_LA])
-		cub_turn(LEFT, 0.1F, data->player);
+		cub_turn(LEFT, 0.05F, data->player);
 	if (data->keys[KEY_W])
 		cub_step(FORWARD, data);
 	if (data->keys[KEY_S])
