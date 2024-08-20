@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:23:40 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/20 12:35:41 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/20 12:40:14 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ void	cub_turn(int side, float turn_angle, t_player *player)
 bool	cub_collision(t_data *data, float pos_x, float pos_y)
 {
 	t_coord	m;
-	t_coord	offset;
+	t_pos	offset;
 
-	offset.y = -2;
-	while (offset.y <= 2)
+	offset.y = -STEP;
+	while (offset.y <= STEP)
 	{
 		m.y = (short)((pos_y + offset.y) / BLOCK);
-		offset.x = -2;
+		offset.x = -STEP;
 		if (m.y < 0 || m.y >= data->map->y)
 			return (1);
-		while (offset.x <= 2)
+		while (offset.x <= STEP)
 		{
 			m.x = (short)((pos_x + offset.x) / BLOCK);
 			if (m.x < 0 || m.x >= data->map->x)

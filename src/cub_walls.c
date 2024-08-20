@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:38:09 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/19 13:56:24 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/20 12:50:57 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	cub_walls_draw(t_data *data, t_ray *ray, float dist)
 	off.x = res.x * ray->num;
 	off.y = (WIN_HEIGHT - res.y) >> 1;
 	color = cub_wall_color(ray);
-	factor = 0.2F * (-0.008F * dist);
+	factor = 0.2F * (-0.004F * dist);
 	color = cub_adjust_brightness(color, factor);
 	pix.y = -1;
 	while (++pix.y < res.y)
