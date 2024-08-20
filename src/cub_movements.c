@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:23:40 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/15 01:56:59 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/20 12:35:41 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,49 @@ void	cub_turn(int side, float turn_angle, t_player *player)
 	player->delta.y = sin(player->angle) * STEP;
 }
 
-void	cub_step(int dir, t_data *data)
+bool	cub_collision(t_data *data, float pos_x, float pos_y)
 {
-	t_pos	new_pos;
 	t_coord	m;
-	int		try[2];
+	t_coord	offset;
 
-	new_pos = data->player->pos;
-	new_pos.x += data->player->delta.x * (float)dir * 2.0F;
-	m.x = (int)new_pos.x / BLOCK;
-	m.y = (int)data->player->pos.y / BLOCK;
-	try[HOR] = (data->map->map[m.y * data->map->x + m.x] == 0);
-	new_pos = data->player->pos;
-	new_pos.y += data->player->delta.y * (float)dir * 2.0F;
-	m.y = (int)new_pos.y / BLOCK;
-	m.x = (int)data->player->pos.x / BLOCK;
-	try[VERT] = (data->map->map[m.y * data->map->x + m.x] == 0);
-	data->player->pos.x += try[HOR] * data->player->delta.x * (float)dir;
-	data->player->pos.y += try[VERT] * data->player->delta.y * (float)dir;
+	offset.y = -2;
+	while (offset.y <= 2)
+	{
+		m.y = (short)((pos_y + offset.y) / BLOCK);
+		offset.x = -2;
+		if (m.y < 0 || m.y >= data->map->y)
+			return (1);
+		while (offset.x <= 2)
+		{
+			m.x = (short)((pos_x + offset.x) / BLOCK);
+			if (m.x < 0 || m.x >= data->map->x)
+				return (1);
+			if (data->map->map[m.y * data->map->x + m.x] == 1)
+				return (1);
+			offset.x++;
+		}
+		offset.y++;
+	}
+	return (0);
+}
+
+void cub_step(int dir, t_data *data)
+{
+    t_pos new_pos;
+
+    new_pos.x = data->player->pos.x + data->player->delta.x * (float)dir;
+    new_pos.y = data->player->pos.y + data->player->delta.y * (float)dir;
+
+    if (!cub_collision(data, data->player->pos.x, new_pos.y))
+        data->player->pos.y = new_pos.y;
+    else
+        while (cub_collision(data, data->player->pos.x, data->player->pos.y))
+            data->player->pos.y -= data->player->delta.y * 0.1F * dir;
+    if (!cub_collision(data, new_pos.x, data->player->pos.y))
+        data->player->pos.x = new_pos.x;
+    else
+        while (cub_collision(data, data->player->pos.x, data->player->pos.y))
+            data->player->pos.x -= data->player->delta.x * 0.1F * dir;
 }
 
 void	cub_slide(int dir, t_data *data)
