@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/20 12:51:33 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/22 12:33:25 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@
 # define DEG_TO_RAD 0.0174533
 # define PI_TWICE	6.28318530718
 
+# define WEST		3.141593
+# define EAST		0.0
+# define NORTH		4.712389
+# define SOUTH		1.570796
+
 # define CUB_ERROR -1
 # define NOT_YET	0
 # define ALL_FINE	1
@@ -66,6 +71,7 @@ enum e_map_constants
 	WALL_Y_Q =			WIN_HEIGHT*BLOCK/2*3,
 	STEP =				BLOCK/8,
 	POINTER_LENGHT =	BLOCK/2,
+	HITBOX_LIMIT =		STEP * 2,
 };
 
 enum e_fps
@@ -112,14 +118,6 @@ enum e_keys
 	KEY_A,
 };
 
-enum e_sides
-{
-	EAST,
-	NORTH,
-	WEST,
-	SOUTH
-};
-
 typedef struct s_coord
 {
 	short			x;
@@ -147,12 +145,12 @@ typedef struct s_map
 
 typedef struct s_ray
 {
-	t_pos			hit[2];
+	t_pos			hit_pos[2];
 	t_pos			pos;
 	float			dist[2];
 	float			angle;
 	short			num;
-	bool			vert_hit;
+	bool			hit;
 }				t_ray;
 
 typedef struct s_player
@@ -171,14 +169,22 @@ typedef struct s_image
 	int				bpp;
 	int				line_len;
 	int				endian;
+	int				width;
+	int				height;
 }				t_image;
+
+enum e_textures
+{
+	TXTR_WEST,
+	TXTR_EAST,
+	TXTR_NORTH,
+	TXTR_SOUTH,
+};
 
 typedef struct s_assets
 {
-	t_image			east;
-	t_image			nord;
-	t_image			west;
-	t_image			south;
+	t_image			texture[4];
+	char			filename[4][FILENAME_MAX];
 }				t_assets;
 
 typedef struct s_data

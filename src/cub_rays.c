@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:18:41 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/14 15:46:01 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/21 14:54:19 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,12 @@ void	cub_rays_n_walls(t_player *player, t_map *map, t_data *data)
 	while (r.num < player->res)
 	{
 		r.angle += (r.angle < 0) * PI_TWICE - (r.angle > PI_TWICE) * PI_TWICE;
-		r.dist[HOR] = cub_ray_hit_hor(player, map, &r.hit[HOR], r.angle);
-		r.dist[VERT] = cub_ray_hit_vert(player, map, &r.hit[VERT], r.angle);
-		r.vert_hit = r.dist[VERT] < r.dist[HOR];
-		fish_dist = cub_fisheye(data, r.angle,
-				r.dist[r.dist[VERT] < r.dist[HOR]]);
+		r.dist[HOR] = cub_ray_hit_hor(player, map, &r.hit_pos[HOR], r.angle);
+		r.dist[VERT] = cub_ray_hit_vert(player, map, &r.hit_pos[VERT], r.angle);
+		r.hit = r.dist[VERT] < r.dist[HOR];
+		fish_dist = cub_fisheye(data, r.angle, r.dist[r.hit]);
 		cub_walls_draw(data, &r, fish_dist);
-		r.pos = r.hit[r.vert_hit];
+		r.pos = r.hit_pos[r.hit];
 		if (map->draw_rays)
 			cub_draw_line(data->render, cub_pos_to_coord(player->pos),
 				cub_pos_to_coord(r.pos), GREEN);

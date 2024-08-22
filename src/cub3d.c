@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:15 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/14 11:20:05 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/22 12:27:56 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int	cub_exit(t_data *data)
 {
+	int	i;
+	
+	i = 0;
+	while (data->assets->texture[i].img != NULL && i < 4)
+		mlx_destroy_image(data->mlx, data->assets->texture[i++].img);
 	mlx_destroy_image(data->mlx, data->render->img);
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
@@ -31,7 +36,7 @@ int	main(int argc, char **argv)
 	t_assets	assets;
 
 	if (cub_check_input(argc, argv[1]) == CUB_ERROR)
-		return (CUB_ERROR);
+		return (EXIT_FAILURE);
 	data.player = &player;
 	data.render = &render;
 	data.map = &map;

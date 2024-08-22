@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:50:06 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/19 13:44:06 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/22 12:17:04 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ inline void	cub_tool_coord_norm(short *x, short *y)
 {
 	*x *= (*x > 0);
 	*y *= (*y > 0);
-	*x += (*x > WIN_WIDTH) * (WIN_WIDTH - *x - 1);
-	*y += (*y > WIN_HEIGHT) * (WIN_HEIGHT - *y - 1);
+	*x += (*x >= WIN_WIDTH) * (WIN_WIDTH - *x - 1);
+	*y += (*y >= WIN_HEIGHT) * (WIN_HEIGHT - *y - 1);
 }
 
 inline t_coord	cub_pos_to_coord(t_pos pos)
