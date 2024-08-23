@@ -6,11 +6,21 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:00:21 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/14 10:53:42 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/23 10:03:26 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+void	cub_print(t_data *data)
+{
+	printf ("\nAngle: %f, x: %f, y: %f, FOW: %d, res: %d\n",
+		data->player->angle, data->player->pos.x, data->player->pos.y,
+		data->player->fow, data->player->res);
+	printf ("Coord: x: %d, y: %d\n",
+		((int)data->player->pos.x / BLOCK),
+		((int)data->player->pos.y / BLOCK));
+}
 
 void	cub_key_hold(int keysym, t_data *data)
 {
@@ -44,12 +54,7 @@ int	cub_key_press(int keysym, t_data *data)
 		data->map->draw_rays = !data->map->draw_rays;
 	else
 		cub_key_hold(keysym, data);
-	printf ("\nAngle: %f, x: %f, y: %f, FOW: %d, res: %d\n",
-		data->player->angle, data->player->pos.x, data->player->pos.y,
-		data->player->fow, data->player->res);
-	printf ("Coord: x: %d, y: %d\n",
-		((int)data->player->pos.x / BLOCK),
-		((int)data->player->pos.y / BLOCK));
+	cub_print(data);
 	return (ALL_FINE);
 }
 
@@ -67,5 +72,6 @@ int	cub_key_release(int keysym, t_data *data)
 		data->keys[KEY_D] = 0;
 	else if (keysym == XK_a)
 		data->keys[KEY_A] = 0;
+	cub_print(data);
 	return (ALL_FINE);
 }

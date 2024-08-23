@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:18:41 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/21 14:54:19 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/23 10:38:08 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,6 @@ void	cub_rays_n_walls(t_player *player, t_map *map, t_data *data)
 		r.angle += angle_step;
 		r.num++;
 	}
+	// printf("x: %f	y: %f\n", r.pos.x, r.pos.y);
+	cub_walls_draw_texture(data, &r, (float *)&r.pos, fish_dist);
 }

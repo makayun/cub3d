@@ -3,9 +3,16 @@
 #include <limits.h>
 #include <math.h>
 
-
+typedef struct s_pos
+{
+	float	x;
+	float	y;
+}				t_pos;
 
 int main()
 {
-	printf ("%d %d", 1 % 4, 9 % 4);
+	double ff = 37.923378;
+	int x = (int)(ff) * 4 % 64;
+	printf("%d\n", x);
+
 }

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/22 12:33:25 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/23 11:36:48 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,17 +175,11 @@ typedef struct s_image
 
 enum e_textures
 {
-	TXTR_WEST,
-	TXTR_EAST,
-	TXTR_NORTH,
-	TXTR_SOUTH,
+	WALL_WEST,
+	WALL_EAST,
+	WALL_NORTH,
+	WALL_SOUTH,
 };
-
-typedef struct s_assets
-{
-	t_image			texture[4];
-	char			filename[4][FILENAME_MAX];
-}				t_assets;
 
 typedef struct s_data
 {
@@ -194,7 +188,7 @@ typedef struct s_data
 	t_image			*render;
 	t_player		*player;
 	t_map			*map;
-	t_assets		*assets;
+	t_image			*texture;
 	long			next_frame;
 	bool			keys[6];
 }				t_data;
@@ -232,4 +226,6 @@ float	cub_fisheye(t_data *data, float ray_angle, float ray_dist);
 float	cub_gradient(float frow);
 t_coord	cub_pos_to_coord(t_pos pos);
 void	cub_tool_coord_norm(short *x, short *y);
+
+int		cub_walls_draw_texture(t_data *data, t_ray *ray, float *pos, float dist);
 #endif
