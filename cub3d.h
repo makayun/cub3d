@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/23 11:36:48 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/23 15:17:02 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ enum e_keys
 
 typedef struct s_coord
 {
-	short			x;
-	short			y;
+	int			x;
+	int			y;
 }				t_coord;
 
 typedef struct s_position
@@ -134,12 +134,12 @@ typedef struct s_map
 {
 	bool			map[MAP_MAX];
 	int				back_colors[2];
-	unsigned short	x;
-	unsigned short	y;
-	unsigned short	size;
-	unsigned short	shift;
-	unsigned short	w;
-	unsigned short	h;
+	int	x;
+	int	y;
+	unsigned int	size;
+	unsigned int	shift;
+	int	w;
+	int	h;
 	bool			draw_rays;
 }				t_map;
 
@@ -149,7 +149,7 @@ typedef struct s_ray
 	t_pos			pos;
 	float			dist[2];
 	float			angle;
-	short			num;
+	int			num;
 	bool			hit;
 }				t_ray;
 
@@ -158,8 +158,8 @@ typedef struct s_player
 	t_pos			pos;
 	t_pos			delta;
 	float			angle;
-	short			fow;
-	short			res;
+	int			fow;
+	int			res;
 }				t_player;
 
 typedef struct s_image
@@ -213,7 +213,7 @@ void	cub_step(int dir, t_data *data);
 void	cub_slide(int dir, t_data *data);
 
 int		cub_render(t_data *data);
-void	cub_draw_pixel(t_image *img, short x, short y, unsigned int color);
+void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color);
 void	cub_draw_map(t_data *data);
 void	cub_draw_line(t_image *image, t_coord start, t_coord end, int color);
 
@@ -225,7 +225,8 @@ int		cub_adjust_brightness(int color, float factor);
 float	cub_fisheye(t_data *data, float ray_angle, float ray_dist);
 float	cub_gradient(float frow);
 t_coord	cub_pos_to_coord(t_pos pos);
-void	cub_tool_coord_norm(short *x, short *y);
+void	cub_tool_coord_norm(int *x, int *y);
 
 int		cub_walls_draw_texture(t_data *data, t_ray *ray, float *pos, float dist);
+void	cub_slice(t_data *data, t_ray *ray, float *pos, float dist);
 #endif

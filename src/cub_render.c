@@ -6,13 +6,13 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:42:48 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/23 11:29:10 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/23 15:14:32 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-inline void	cub_draw_pixel(t_image *img, short x, short y, unsigned int color)
+inline void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color)
 {
 	char	*pixel;
 
@@ -25,7 +25,7 @@ void	cub_draw_background(t_image *image, int *colors)
 {
 	float			gradient;
 	unsigned int	color;
-	const int		mid = WIN_HEIGHT / 2 - 1;
+	const int		mid = WIN_HEIGHT >> 1;
 	int				x;
 	int				y;
 

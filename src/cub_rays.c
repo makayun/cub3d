@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 07:18:41 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/23 10:38:08 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/23 15:05:56 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	cub_rays_n_walls(t_player *player, t_map *map, t_data *data)
 		r.dist[VERT] = cub_ray_hit_vert(player, map, &r.hit_pos[VERT], r.angle);
 		r.hit = r.dist[VERT] < r.dist[HOR];
 		fish_dist = cub_fisheye(data, r.angle, r.dist[r.hit]);
-		cub_walls_draw(data, &r, fish_dist);
+		// cub_walls_draw(data, &r, fish_dist);
+		cub_slice(data, &r, (float *)&r.pos, fish_dist);
 		r.pos = r.hit_pos[r.hit];
 		if (map->draw_rays)
 			cub_draw_line(data->render, cub_pos_to_coord(player->pos),
@@ -102,5 +103,4 @@ void	cub_rays_n_walls(t_player *player, t_map *map, t_data *data)
 		r.num++;
 	}
 	// printf("x: %f	y: %f\n", r.pos.x, r.pos.y);
-	cub_walls_draw_texture(data, &r, (float *)&r.pos, fish_dist);
 }

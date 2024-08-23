@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 04:00:49 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/23 13:21:50 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/23 16:29:28 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	cub_init_images(t_data *data)
 	data->render->img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
 	data->render->addr = mlx_get_data_addr(data->render->img, &data->render->bpp, &data->render->line_len, &data->render->endian);
 	ft_strlcpy(filename[WALL_EAST], "./assets/xpms/64/1.xpm", FILENAME_MAX);
-	ft_strlcpy(filename[WALL_NORTH], "./assets/xpms/64/2.xpm", FILENAME_MAX);
+	ft_strlcpy(filename[WALL_NORTH], "./assets/xpms/64/3.xpm", FILENAME_MAX);
 	ft_strlcpy(filename[WALL_SOUTH], "./assets/xpms/64/6.xpm", FILENAME_MAX);
 	ft_strlcpy(filename[WALL_WEST], "./assets/xpms/64/4.xpm", FILENAME_MAX);
 	i = 0;

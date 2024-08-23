@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:50:06 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/23 10:11:32 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/23 15:29:33 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ inline int	cub_adjust_brightness(int color, float factor)
 	return (new_color);
 }
 
-inline void	cub_tool_coord_norm(short *x, short *y)
+inline void	cub_tool_coord_norm(int *x, int *y)
 {
 	*x *= (*x > 0);
 	*y *= (*y > 0);
@@ -54,4 +54,14 @@ long	cub_current_time(void)
 
 	gettimeofday(&t, NULL);
 	return (t.tv_sec * 1000000 + t.tv_usec);
+}
+
+inline float	cub_fisheye(t_data *data, float ray_angle, float ray_dist)
+{
+	float	fish_angle;
+
+	fish_angle = data->player->angle - ray_angle;
+	fish_angle += (fish_angle < 0) * PI_TWICE;
+	fish_angle -= (fish_angle > PI_TWICE) * PI_TWICE;
+	return (ray_dist * cos(fish_angle) + sqrt(ray_dist));
 }

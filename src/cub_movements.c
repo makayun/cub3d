@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:23:40 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/22 23:03:47 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/23 15:15:31 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ bool	cub_collision(t_data *data, float pos_x, float pos_y)
 	offset.y = -HITBOX_LIMIT;
 	while (offset.y <= HITBOX_LIMIT)
 	{
-		m.y = (short)((pos_y + offset.y) / BLOCK);
+		m.y = (int)((pos_y + offset.y) / BLOCK);
 		offset.x = -HITBOX_LIMIT;
-		if (m.y < 0 || m.y >= data->map->y)
+		if (m.y < 0 || m.y >= (int)data->map->y)
 			return (1);
 		while (offset.x <= HITBOX_LIMIT)
 		{
-			m.x = (short)((pos_x + offset.x) / BLOCK);
-			if (m.x < 0 || m.x >= data->map->x)
+			m.x = (int)((pos_x + offset.x) / BLOCK);
+			if (m.x < 0 || m.x >= (int)data->map->x)
 				return (1);
 			if (data->map->map[m.y * data->map->x + m.x] == 1)
 				return (1);
