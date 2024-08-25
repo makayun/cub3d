@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:41:00 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/22 12:32:13 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/26 00:04:11 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,17 @@ void	cub_init_mlx(t_data *data)
 	}
 }
 
-void	cub_init(char  **argv, t_data *data)
+void	cub_init(char **argv, t_data *data)
 {
-	int i;
+	int	i;
 
-	cub_parse(argv, data);
+	if (cub_parse(argv[1], data) == CUB_ERROR)
+		exit (EXIT_FAILURE);
 	cub_init_mlx(data);
+	cub_init_images(data, data->render, data->texture);
 	i = 0;
 	while (i < 6)
 		data->keys[i++] = 0;
 	cub_init_map(data);
-	cub_init_images(data);
 	cub_init_player(data);
 }

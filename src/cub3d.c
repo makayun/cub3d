@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:15 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/23 09:52:12 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/24 00:33:56 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	cub_exit(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < 4 && data->texture[i].img != NULL)
 		mlx_destroy_image(data->mlx, data->texture[i++].img);

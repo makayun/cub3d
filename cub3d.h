@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/23 15:17:02 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/26 00:28:54 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@
 # define EAST		0.0
 # define NORTH		4.712389
 # define SOUTH		1.570796
+
+enum e_textures
+{
+	WALL_WEST,
+	WALL_EAST,
+	WALL_NORTH,
+	WALL_SOUTH,
+};
 
 # define CUB_ERROR -1
 # define NOT_YET	0
@@ -173,16 +181,17 @@ typedef struct s_image
 	int				height;
 }				t_image;
 
-enum e_textures
+typedef	struct s_slice
 {
-	WALL_WEST,
-	WALL_EAST,
-	WALL_NORTH,
-	WALL_SOUTH,
-};
+	int		w_side;
+	int		clmn;
+	float	y_q;
+	float	factor;
+}				t_slice;
 
 typedef struct s_data
 {
+	char			txtr_flnm[4][FILENAME_MAX];
 	void			*mlx;
 	void			*win;
 	t_image			*render;
@@ -198,10 +207,10 @@ int		cub_check_input(int argc, char *filename);
 int		cub_exit(t_data *data);
 
 void	cub_init(char **argv, t_data *data);
-int		cub_parse(char **argv, t_data *data);
+int		cub_parse(char *filename, t_data *data);
 void	cub_init_map(t_data *data);
 void	cub_init_player(t_data *data);
-void	cub_init_images(t_data *data);
+void	cub_init_images(t_data *data, t_image *render, t_image *texture);
 
 int		cub_key_press(int keysym, t_data *data);
 void	cub_key_hold(int keysym, t_data *data);
@@ -214,7 +223,8 @@ void	cub_slide(int dir, t_data *data);
 
 int		cub_render(t_data *data);
 void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color);
-void	cub_draw_map(t_data *data);
+void	cub_draw_square(t_image *image, t_coord coord, int size, int color);
+void	cub_map_draw(t_data *data);
 void	cub_draw_line(t_image *image, t_coord start, t_coord end, int color);
 
 void	cub_rays_n_walls(t_player *player, t_map *map, t_data *data);
@@ -222,11 +232,13 @@ float	cub_dist(t_pos a, t_pos b);
 void	cub_walls_draw(t_data *data, t_ray *ray, float dist);
 
 int		cub_adjust_brightness(int color, float factor);
-float	cub_fisheye(t_data *data, float ray_angle, float ray_dist);
+float	cub_tool_fisheye(t_data *data, float ray_angle, float ray_dist);
 float	cub_gradient(float frow);
 t_coord	cub_pos_to_coord(t_pos pos);
 void	cub_tool_coord_norm(int *x, int *y);
 
-int		cub_walls_draw_texture(t_data *data, t_ray *ray, float *pos, float dist);
-void	cub_slice(t_data *data, t_ray *ray, float *pos, float dist);
+void	cub_wall_slice(t_data *data, t_ray *ray, float *pos, float dist);
+int		cub_get_pixel(t_image *img, int x, int y);
+int		cub_w_side(t_ray *ray);
+int		cub_get_column(int w_side, float ray_hit_pos, int img_side);
 #endif

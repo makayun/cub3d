@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:23:40 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/23 15:15:31 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/25 00:49:16 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	cub_slide(int dir, t_data *data)
 }
 
 void	cub_movement_update(t_data *data)
-{	
+{
 	if (data->keys[KEY_RA])
 		cub_turn(RIGHT, DEG_TO_RAD * 4, data->player);
 	if (data->keys[KEY_LA])

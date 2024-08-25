@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 03:58:59 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/23 13:13:22 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/25 01:50:06 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	cub_init_player(t_data *data)
 {
-	data->player->pos.x = 555.0F;
-	data->player->pos.y = 83.0F;
+	data->player->pos.x = BLOCK + BLOCK / 2;
+	data->player->pos.y = BLOCK + BLOCK / 2;
 	data->player->angle = EAST;
 	data->player->delta.x = cos(data->player->angle) * STEP;
 	data->player->delta.y = sin(data->player->angle) * STEP;

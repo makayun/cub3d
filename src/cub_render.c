@@ -6,20 +6,11 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:42:48 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/23 15:14:32 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/25 22:08:16 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-inline void	cub_draw_pixel(t_image *img, int x, int y, unsigned int color)
-{
-	char	*pixel;
-
-	cub_tool_coord_norm(&x, &y);
-	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(int *)pixel = color;
-}
 
 void	cub_draw_background(t_image *image, int *colors)
 {
@@ -52,7 +43,7 @@ int	cub_render(t_data *data)
 	{
 		cub_movement_update(data);
 		cub_draw_background(data->render, data->map->back_colors);
-		cub_draw_map(data);
+		cub_map_draw(data);
 		cub_rays_n_walls(data->player, data->map, data);
 		mlx_put_image_to_window(data->mlx, data->win, data->render->img, 0, 0);
 		data->next_frame = current_time + FRAME_TIME;
