@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmakagon <mmakagon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:21:28 by mmakagon          #+#    #+#             */
-/*   Updated: 2024/05/13 14:58:14 by mmakagon         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:45:23 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,13 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	char			*newchar;
-	size_t			i;
-	unsigned char	ch;
+	char				*newchar;
+	const unsigned char	ch = (char)c;
 
-	ch = (char)c;
+	if (!s)
+		return (NULL);
 	if (c == '\0')
-	{
-		i = ft_strlen(s);
-		while (i)
-		{
-			s++;
-			i--;
-		}
-		return ((char *) s);
-	}
+		return ((char *)(ft_strlen(s) + s));
 	if (s[0] == '\0')
 		return (NULL);
 	newchar = NULL;

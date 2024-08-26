@@ -1,18 +1,25 @@
 #include <stdio.h>
-#include <stdbool.h>
-#include <limits.h>
 #include <math.h>
 
-typedef struct s_pos
+#define BLOCK 32
+
+int	cub_count_shift(void)
 {
-	float	x;
-	float	y;
-}				t_pos;
+	int shift;
+	int	map_block;
+
+	map_block = BLOCK;
+	shift = 0;
+	while (map_block)
+	{
+		if ((map_block >> shift) == 1)
+			break ;
+		shift++;
+	}
+	return (shift);
+}
 
 int main()
 {
-	double ff = 37.923378;
-	int x = (int)(ff) * 4 % 64;
-	printf("%d\n", x);
-
+	printf ("%d %d\n", cub_count_shift(), (int)log2(BLOCK));
 }

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 15:03:36 by mmakagon          #+#    #+#             */
-/*   Updated: 2024/05/29 00:55:42 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/26 21:36:22 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*ft_strchr(const char *s, int c)
 {
 	unsigned char	ch;
 
+	if (!s || !*s)
+		return (NULL);
 	ch = (char)c;
 	while (*s != ch && *s != '\0')
 		s++;

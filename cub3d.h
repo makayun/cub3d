@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/26 00:28:54 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/26 22:37:40 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 # define CUB3D_H
 
 # include <limits.h>
-# include <stdlib.h>
 # include <stdio.h>
-# include <fcntl.h>
-# include <stddef.h>
 # include <stdbool.h>
 # include <math.h>
 # include <sys/time.h>
@@ -26,20 +23,20 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 
-	// MATH CONSTANTS
-	// M_E       base of natural logarithm, e
-	// M_LOG2E   log2(e)
-	// M_LOG10E  log10(e)
-	// M_LN2     ln(2)
-	// M_LN10    ln(10)
-	// M_PI      pi
-	// M_PI_2    pi / 2
-	// M_PI_4    pi / 4
-	// M_1_PI    1 / pi
-	// M_2_PI    2 / pi
-	// M_2_SQRTPI 2 / sqrt(pi)
-	// M_SQRT2   sqrt(2)
-	// M_SQRT1_2 sqrt(1/2)
+// MATH CONSTANTS
+// M_E       base of natural logarithm, e
+// M_LOG2E   log2(e)
+// M_LOG10E  log10(e)
+// M_LN2     ln(2)
+// M_LN10    ln(10)
+// M_PI      pi
+// M_PI_2    pi / 2
+// M_PI_4    pi / 4
+// M_1_PI    1 / pi
+// M_2_PI    2 / pi
+// M_2_SQRTPI 2 / sqrt(pi)
+// M_SQRT2   sqrt(2)
+// M_SQRT1_2 sqrt(1/2)
 
 # define DEG_TO_RAD 0.0174533
 # define PI_TWICE	6.28318530718
@@ -128,8 +125,8 @@ enum e_keys
 
 typedef struct s_coord
 {
-	int			x;
-	int			y;
+	int				x;
+	int				y;
 }				t_coord;
 
 typedef struct s_position
@@ -142,12 +139,12 @@ typedef struct s_map
 {
 	bool			map[MAP_MAX];
 	int				back_colors[2];
-	int	x;
-	int	y;
+	int				x;
+	int				y;
 	unsigned int	size;
 	unsigned int	shift;
-	int	w;
-	int	h;
+	int				w;
+	int				h;
 	bool			draw_rays;
 }				t_map;
 
@@ -157,7 +154,7 @@ typedef struct s_ray
 	t_pos			pos;
 	float			dist[2];
 	float			angle;
-	int			num;
+	int				num;
 	bool			hit;
 }				t_ray;
 
@@ -166,8 +163,8 @@ typedef struct s_player
 	t_pos			pos;
 	t_pos			delta;
 	float			angle;
-	int			fow;
-	int			res;
+	int				fow;
+	int				res;
 }				t_player;
 
 typedef struct s_image
@@ -181,12 +178,12 @@ typedef struct s_image
 	int				height;
 }				t_image;
 
-typedef	struct s_slice
+typedef struct s_slice
 {
-	int		w_side;
-	int		clmn;
-	float	y_q;
-	float	factor;
+	int				w_side;
+	int				clmn;
+	float			y_q;
+	float			factor;
 }				t_slice;
 
 typedef struct s_data
