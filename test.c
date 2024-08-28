@@ -30,10 +30,8 @@ int	cub_parse_parameters(char *line, t_data *data)
 	return (0);
 }
 
-void	cub_init_player_new(t_data *data, int x, int y, char dir)
+int	cub_init_player_new(t_data *data, int x, int y, char dir)
 {
-	data->player->pos.x = x * BLOCK + BLOCK / 2;
-	data->player->pos.y = y * BLOCK + BLOCK / 2;
 	if (dir == 'W')
 		data->player->angle = WEST;
 	else if (dir == 'E')
@@ -42,22 +40,54 @@ void	cub_init_player_new(t_data *data, int x, int y, char dir)
 		data->player->angle = NORTH;
 	else if (dir == 'S')
 		data->player->angle = SOUTH;
+	else
+		return (NOT_YET);
+	data->player->pos.x = x * BLOCK + BLOCK / 2;
+	data->player->pos.y = y * BLOCK + BLOCK / 2;
 	data->player->delta.x = cos(data->player->angle) * STEP;
 	data->player->delta.y = sin(data->player->angle) * STEP;
 	data->player->fow = FOW_MAX / 2;
 	data->player->res = RES_MAX;
+	return (ALL_FINE);
 }
 
-int	cub_parse_map(t_data *data, bool *map, int fd)
+int	cub_init_map_new(t_data *data, bool *map, char tmp_map[MAP_H_MAX][MAP_W_MAX])
+{
+	int		x;
+	int		y;
+	size_t	line_len;
+	int		player_inited;
+
+	player_inited = 0;
+	y = 0;
+	while (y < data->map->y)
+	{
+		line_len = ft_strlen(tmp_map[y]);
+		x = 0;
+		while (x < line_len)
+		{
+			player_inited += cub_init_player_new(data, x, y, tmp_map[y][x]);
+			*(map++) = (tmp_map[y][x++] == '1');
+		}
+		while (x++ < data->map->x)
+			*(map++) = 0;
+		y++;
+	}
+	if (player_inited != 1)
+		return (printf(T_RED"Error:\nCheck the player!\n"T_DEF), CUB_ERROR);
+	// return (cub_check_map(tmp_map, data));
+	return (ALL_FINE);
+}
+
+int	cub_parse_map(t_data *data, t_map *map, int fd)
 {
 	char	*line;
 	char	*nl;
-	size_t	line_len;
-	int		i;
+	char	temp_map[MAP_H_MAX][MAP_W_MAX];
 
 	line = "";
-	data->map->x = 0;
-	data->map->y = 0;
+	map->x = 0;
+	map->y = 0;
 	while (line)
 	{
 		line = get_next_line(fd);
@@ -66,22 +96,13 @@ int	cub_parse_map(t_data *data, bool *map, int fd)
 			*nl = 0;
 		if (!line || !*line)
 			continue ;
-		line_len = ft_strlen(line);
-		if (MAP_WIDTH_MAX <= line_len)
-			return (free(line), CUB_ERROR);
-		data->map->x = (data->map->x < line_len) * line_len;
-		i = 0;
-		while (i < line_len)
-		{
-			if (line[i] == 'W' || line[i] == 'E' || line[i] == 'N' || line[i] == 'S')
-				cub_init_player_new(data, i, data->map->y, line[i]);
-			*(map++) = (line[i++] == '1');
-		}
+		map->x += (map->x < ft_strlen(line)) * (ft_strlen(line) - map->x);
+		ft_strcpy(temp_map[map->y], line);
 		free (line);
-		if (MAP_HEIGHT_MAX <= ++data->map->y)
-			return(CUB_ERROR);
+		if (++map->y >= MAP_H_MAX)
+			return (CUB_ERROR);
 	}
-	return (ALL_FINE);
+	return (cub_init_map_new(data, map->map, temp_map));
 }
 
 int	cub_parse(char *filename, t_data *data)
@@ -92,8 +113,7 @@ int	cub_parse(char *filename, t_data *data)
 
 	fd = open(filename, O_RDONLY);
 	if (fd == CUB_ERROR)
-		return (printf(ANSI_RED"Error:\nCan't open the map!"ANSI_DEF),
-			CUB_ERROR);
+		return (printf(T_RED"Error:\nCan't open the map!"T_DEF), CUB_ERROR);
 	line = "";
 	parameters = 0;
 	while (line && parameters < 6)
@@ -105,30 +125,31 @@ int	cub_parse(char *filename, t_data *data)
 	if (parameters < 6)
 	{
 		close(fd);
-		printf(ANSI_RED"Error:\nCheck paramaters in the map!"ANSI_DEF);
+		printf(T_RED"Error:\nCheck paramaters in the map!"T_DEF);
 		return (CUB_ERROR);
 	}
-	if (cub_parse_map(data, data->map->map, fd) == CUB_ERROR)
+	if (cub_parse_map(data, data->map, fd) == CUB_ERROR)
 		return (close(fd), CUB_ERROR);
 	close (fd);
 	return (ALL_FINE);
 }
-
 
 int main(int argc, char **argv)
 {
 	t_map	map;
 	t_player player;
 	t_data	data;
-	int		i = -1;
+	int		i = 0;
 
 	data.map = &map;
 	data.player = &player;
 	cub_parse(argv[1], &data);
 	printf ("map.x: %d\nmap.y: %d\nplayer.pos.x: %f\nplayer.pos.y: %f\nplayer.angle: %f\n",
-				map.x, map.y, player.pos.x, player.pos.y, player.angle);
-	while (++i < map.y * map.x)
+			map.x, map.y, player.pos.x, player.pos.y, player.angle);
+	while (i < (data.map->y * data.map->x))
 	{
-			printf("%d", map.map[i]);
+		if (i % map.x == 0)
+			printf("\n");
+		printf("%d", map.map[i++]);
 	}
 }

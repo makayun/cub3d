@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 04:00:49 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/26 00:06:02 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/28 03:02:47 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	cub_init_images(t_data *data, t_image *render, t_image *texture)
 				&texture[i].width, &texture[i].height);
 		if (!texture[i].img)
 		{
-			printf (ANSI_RED "Wrong asset's path or filename: %s\n" ANSI_DEF,
+			printf (T_RED "Wrong asset's path or filename: %s\n" T_DEF,
 				data->txtr_flnm[i]);
 			cub_exit(data);
 		}

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:41:00 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/26 00:04:11 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/28 12:54:27 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ void	cub_init(char **argv, t_data *data)
 	while (i < 6)
 		data->keys[i++] = 0;
 	cub_init_map(data);
-	cub_init_player(data);
+	// cub_init_player(data);
 }

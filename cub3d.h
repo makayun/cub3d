@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/27 17:38:05 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/28 12:55:49 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@
 # define WIN_WIDTH	1024
 # define WIN_HEIGHT	640
 
-# define BLOCK		16
+# define BLOCK		8
 
 enum e_map_constants
 {
-	MAP_WIDTH_MAX =		WIN_WIDTH/BLOCK,
-	MAP_HEIGHT_MAX =	WIN_HEIGHT/BLOCK,
-	MAP_MAX =			MAP_WIDTH_MAX*MAP_HEIGHT_MAX,
+	MAP_W_MAX =		WIN_WIDTH/BLOCK,
+	MAP_H_MAX =	WIN_HEIGHT/BLOCK,
+	MAP_MAX =			MAP_W_MAX*MAP_H_MAX,
 	WALL_Y_Q =			WIN_HEIGHT*BLOCK/2*3,
 	STEP =				BLOCK/8,
 	POINTER_LENGHT =	BLOCK/2,
@@ -91,12 +91,12 @@ enum e_textures
 # define MAGENTA	0x00FF00FF
 # define YELLOW		0x00FFFF00
 
-# define ANSI_DEF		"\001\e[0m\002"
-# define ANSI_GRAY		"\001\e[0;90m\002"
-# define ANSI_RED		"\001\e[0;91m\002"
-# define ANSI_GREEN		"\001\e[0;92m\002"
-# define ANSI_MAGENTA	"\001\e[35m\002"
-# define ANSI_CYAN		"\001\e[36m\002"
+# define T_DEF		"\001\e[0m\002"
+# define T_GRAY		"\001\e[0;90m\002"
+# define T_RED		"\001\e[0;91m\002"
+# define T_GREEN		"\001\e[0;92m\002"
+# define T_MAGENTA	"\001\e[35m\002"
+# define T_CYAN		"\001\e[36m\002"
 
 enum e_keys
 {
@@ -124,8 +124,8 @@ typedef struct s_map
 {
 	bool			map[MAP_MAX];
 	int				back_colors[2];
-	int				x;
-	int				y;
+	unsigned int	x;
+	unsigned int	y;
 	unsigned int	size;
 	unsigned int	shift;
 	int				w;
