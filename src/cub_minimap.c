@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 00:28:26 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/25 22:07:27 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/27 17:37:20 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	cub_player_draw(t_data *data)
 	t_coord	coordinates;
 	t_coord	line_end;
 
-	coordinates.x = (int)data->player->pos.x - 1;
-	coordinates.y = (int)data->player->pos.y - 1;
-	cub_draw_square(data->render, coordinates, 3, YELLOW);
 	coordinates = cub_pos_to_coord(data->player->pos);
 	line_end.x = coordinates.x + cos(data->player->angle) * POINTER_LENGHT;
 	line_end.y = coordinates.y + sin(data->player->angle) * POINTER_LENGHT;
 	cub_draw_line(data->render, coordinates, line_end, YELLOW);
+	coordinates.x--;
+	coordinates.y--;
+	cub_draw_square(data->render, coordinates, 3, YELLOW);
 }
 
 void	cub_map_draw(t_data *data)

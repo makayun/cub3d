@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 03:58:59 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/25 01:50:06 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/27 17:02:00 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ void	cub_init_player(t_data *data)
 	data->player->delta.x = cos(data->player->angle) * STEP;
 	data->player->delta.y = sin(data->player->angle) * STEP;
 	data->player->fow = FOW_MAX / 2;
-	data->player->res = WIN_WIDTH / 2;
+	data->player->res = RES_MAX;
 }

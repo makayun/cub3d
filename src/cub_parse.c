@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 09:14:33 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/26 22:32:33 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/27 22:35:29 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,12 @@ int	cub_parse(char *filename, t_data *data)
 		parameters += cub_parse_parameters(line, data);
 		free (line);
 	}
-	close (fd);
 	if (parameters < 6)
-		return (printf(ANSI_RED"Error:\nCheck paramaters in the map!"ANSI_DEF),
-			CUB_ERROR);
+	{
+		close(fd);
+		printf(ANSI_RED"Error:\nCheck paramaters in the map!"ANSI_DEF);
+		return (CUB_ERROR);
+	}
+	close (fd);
 	return (ALL_FINE);
 }

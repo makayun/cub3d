@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/26 22:37:40 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/27 17:38:05 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,33 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 
-// MATH CONSTANTS
-// M_E       base of natural logarithm, e
-// M_LOG2E   log2(e)
-// M_LOG10E  log10(e)
-// M_LN2     ln(2)
-// M_LN10    ln(10)
-// M_PI      pi
-// M_PI_2    pi / 2
-// M_PI_4    pi / 4
-// M_1_PI    1 / pi
-// M_2_PI    2 / pi
-// M_2_SQRTPI 2 / sqrt(pi)
-// M_SQRT2   sqrt(2)
-// M_SQRT1_2 sqrt(1/2)
+# define WIN_WIDTH	1024
+# define WIN_HEIGHT	640
+
+# define BLOCK		16
+
+enum e_map_constants
+{
+	MAP_WIDTH_MAX =		WIN_WIDTH/BLOCK,
+	MAP_HEIGHT_MAX =	WIN_HEIGHT/BLOCK,
+	MAP_MAX =			MAP_WIDTH_MAX*MAP_HEIGHT_MAX,
+	WALL_Y_Q =			WIN_HEIGHT*BLOCK/2*3,
+	STEP =				BLOCK/8,
+	POINTER_LENGHT =	BLOCK/2,
+	HITBOX_LIMIT =		STEP * 2,
+};
+
+enum e_fps
+{
+	FPS =			30,
+	FRAME_TIME =	1000000 / FPS,
+};
+
+# define FOW_MAX	140
+# define FOW_MIN	4
+
+# define RES_MAX	WIN_WIDTH
+# define RES_MIN	4
 
 # define DEG_TO_RAD 0.0174533
 # define PI_TWICE	6.28318530718
@@ -63,33 +76,10 @@ enum e_textures
 # define HOR		0
 # define VERT		1
 
-# define WIN_WIDTH	1024
-# define WIN_HEIGHT	640
-
-# define BLOCK		16
-
-enum e_map_constants
-{
-	MAP_WIDTH_MAX =		WIN_WIDTH/BLOCK,
-	MAP_HEIGHT_MAX =	WIN_HEIGHT/BLOCK,
-	MAP_MAX =			MAP_WIDTH_MAX*MAP_HEIGHT_MAX,
-	WALL_Y_Q =			WIN_HEIGHT*BLOCK/2*3,
-	STEP =				BLOCK/8,
-	POINTER_LENGHT =	BLOCK/2,
-	HITBOX_LIMIT =		STEP * 2,
-};
-
-enum e_fps
-{
-	FPS =			30,
-	FRAME_TIME =	1000000 / FPS,
-};
-
-# define FOW_MAX	120
-# define FOW_MIN	4
-
-# define RES_MAX	WIN_WIDTH
-# define RES_MIN	4
+# define FORWARD	1
+# define BACKWARD  -1
+# define RIGHT		1
+# define LEFT	   -1
 
 # define BLACK		0x0
 # define GRAY		0x00C0C0C0
@@ -107,11 +97,6 @@ enum e_fps
 # define ANSI_GREEN		"\001\e[0;92m\002"
 # define ANSI_MAGENTA	"\001\e[35m\002"
 # define ANSI_CYAN		"\001\e[36m\002"
-
-# define FORWARD	1
-# define BACKWARD  -1
-# define RIGHT		1
-# define LEFT	   -1
 
 enum e_keys
 {

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:38:09 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/26 19:03:11 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/27 21:14:33 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,8 @@ void	cub_wall_slice(t_data *data, t_ray *ray, float *pos, float dist)
 	pix.y = -1;
 	while (++pix.y < res.y)
 	{
-		color = cub_get_pixel(&data->texture[s.w_side],
-				s.clmn, (int)(pix.y * s.y_q));
-		color = cub_adjust_brightness(color, s.factor);
+		color = cub_adjust_brightness(cub_get_pixel(&data->texture[s.w_side],
+				s.clmn, (int)(pix.y * s.y_q)), s.factor);
 		pix.x = -1;
 		while (++pix.x < res.x)
 		{
@@ -83,3 +82,4 @@ void	cub_wall_slice(t_data *data, t_ray *ray, float *pos, float dist)
 		}
 	}
 }
+
