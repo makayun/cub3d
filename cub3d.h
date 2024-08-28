@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/28 12:55:49 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/28 15:50:00 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,7 @@ int		cub_exit(t_data *data);
 
 void	cub_init(char **argv, t_data *data);
 int		cub_parse(char *filename, t_data *data);
-void	cub_init_map(t_data *data);
-void	cub_init_player(t_data *data);
+int		cub_init_map(t_data *data, bool *map, char tmp[MAP_H_MAX][MAP_W_MAX]);
 void	cub_init_images(t_data *data, t_image *render, t_image *texture);
 
 int		cub_key_press(int keysym, t_data *data);
@@ -218,6 +217,7 @@ float	cub_tool_fisheye(t_data *data, float ray_angle, float ray_dist);
 float	cub_gradient(float frow);
 t_coord	cub_pos_to_coord(t_pos pos);
 void	cub_tool_coord_norm(int *x, int *y);
+char	*cub_cut_whitespace(char *line);
 
 void	cub_wall_slice(t_data *data, t_ray *ray, float *pos, float dist);
 int		cub_get_pixel(t_image *img, int x, int y);

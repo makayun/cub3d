@@ -6,11 +6,25 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:50:06 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/25 22:11:53 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/28 14:21:29 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+char	*cub_cut_whitespace(char *line)
+{
+	char	*end;
+
+	if (!line || !*line)
+		return (NULL);
+	while (*line == ' ')
+		line++;
+	end = ft_strchr(line, ' ');
+	if (end && *end)
+		*end = 0;
+	return (line);
+}
 
 inline void	cub_tool_coord_norm(int *x, int *y)
 {

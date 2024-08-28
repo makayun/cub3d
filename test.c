@@ -51,7 +51,7 @@ int	cub_init_player_new(t_data *data, int x, int y, char dir)
 	return (ALL_FINE);
 }
 
-int	cub_init_map_new(t_data *data, bool *map, char tmp_map[MAP_H_MAX][MAP_W_MAX])
+int	cub_init_map_new(t_data *data, bool *map, char tmp[MAP_H_MAX][MAP_W_MAX])
 {
 	int		x;
 	int		y;
@@ -62,12 +62,12 @@ int	cub_init_map_new(t_data *data, bool *map, char tmp_map[MAP_H_MAX][MAP_W_MAX]
 	y = 0;
 	while (y < data->map->y)
 	{
-		line_len = ft_strlen(tmp_map[y]);
+		line_len = ft_strlen(tmp[y]);
 		x = 0;
 		while (x < line_len)
 		{
-			player_inited += cub_init_player_new(data, x, y, tmp_map[y][x]);
-			*(map++) = (tmp_map[y][x++] == '1');
+			player_inited += cub_init_player_new(data, x, y, tmp[y][x]);
+			*(map++) = (tmp[y][x++] == '1');
 		}
 		while (x++ < data->map->x)
 			*(map++) = 0;
@@ -75,7 +75,7 @@ int	cub_init_map_new(t_data *data, bool *map, char tmp_map[MAP_H_MAX][MAP_W_MAX]
 	}
 	if (player_inited != 1)
 		return (printf(T_RED"Error:\nCheck the player!\n"T_DEF), CUB_ERROR);
-	// return (cub_check_map(tmp_map, data));
+	// return (cub_check_map(tmp, data));
 	return (ALL_FINE);
 }
 
