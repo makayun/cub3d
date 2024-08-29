@@ -1,4 +1,5 @@
 #!/bin/bash
+set -v
 
 make
 
@@ -22,5 +23,5 @@ make
 
 ./cub3D ./wrong5_bad_asset.cub
 
-
+./cub3D ./wrong6_wall_hole.cub
 
