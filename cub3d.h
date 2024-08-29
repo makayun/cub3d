@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/28 15:50:00 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/29 02:11:02 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ typedef struct s_data
 
 long	cub_current_time(void);
 int		cub_check_input(int argc, char *filename);
+int		cub_check_map(char map[MAP_H_MAX][MAP_W_MAX], t_data *data, int x, int y);
 int		cub_exit(t_data *data);
 
 void	cub_init(char **argv, t_data *data);

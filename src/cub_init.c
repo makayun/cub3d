@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:41:00 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/28 15:50:00 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/29 03:23:13 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	cub_init_map(t_data *data, bool *map, char tmp[MAP_H_MAX][MAP_W_MAX])
 	}
 	if (player_inited != 1)
 		return (printf(T_RED"Error:\nCheck the player!\n"T_DEF), CUB_ERROR);
-	// return (cub_check_map(tmp, data));
 	return (ALL_FINE);
 }
 
@@ -105,14 +104,19 @@ void	cub_init(char **argv, t_data *data)
 
 	if (cub_parse(argv[1], data) == CUB_ERROR)
 		exit (EXIT_FAILURE);
-	cub_init_mlx(data);
-	cub_init_images(data, data->render, data->texture);
-	i = 0;
-	while (i < 6)
-		data->keys[i++] = 0;
+	if (data->map->x >= MAP_W_MAX || data->map->y >= MAP_H_MAX)
+	{
+		printf(T_RED"Error:\nThe map is too big!\n"T_DEF);
+		exit(EXIT_FAILURE);
+	}
 	data->map->size = data->map->x * data->map->y;
 	data->map->shift = log2(BLOCK);
 	data->map->h = data->map->y * BLOCK;
 	data->map->w = data->map->x * BLOCK;
 	data->map->draw_rays = 0;
+	cub_init_mlx(data);
+	cub_init_images(data, data->render, data->texture);
+	i = 0;
+	while (i < 6)
+		data->keys[i++] = 0;
 }

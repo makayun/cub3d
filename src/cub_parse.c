@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 09:14:33 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/28 14:26:02 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/29 03:09:02 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ int	cub_parse_map(t_data *data, t_map *map, int fd)
 		if (++map->y >= MAP_H_MAX)
 			return (CUB_ERROR);
 	}
-	return (cub_init_map(data, map->map, temp_map));
+	if (cub_init_map(data, map->map, temp_map) == CUB_ERROR)
+		return (CUB_ERROR);
+	return (cub_check_map(temp_map, data, ((int)data->player->pos.x / BLOCK),
+			((int)data->player->pos.y / BLOCK)));
 }
 
 int	cub_parse(char *filename, t_data *data)
@@ -96,7 +99,7 @@ int	cub_parse(char *filename, t_data *data)
 
 	fd = open(filename, O_RDONLY);
 	if (fd == CUB_ERROR)
-		return (printf(T_RED"Error:\nCan't open the map!"T_DEF), CUB_ERROR);
+		return (printf(T_RED"Error:\nCan't open the map!\n"T_DEF), CUB_ERROR);
 	line = "";
 	parameters = 0;
 	while (line && parameters < 6)
@@ -108,7 +111,7 @@ int	cub_parse(char *filename, t_data *data)
 	if (parameters < 6)
 	{
 		close(fd);
-		printf(T_RED"Error:\nCheck paramaters in the map!"T_DEF);
+		printf(T_RED"Error:\nCheck paramaters in the map!\n"T_DEF);
 		return (CUB_ERROR);
 	}
 	if (cub_parse_map(data, data->map, fd) == CUB_ERROR)
