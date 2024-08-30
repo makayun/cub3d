@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/29 02:11:02 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/30 15:51:08 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ enum e_textures
 # define T_DEF		"\001\e[0m\002"
 # define T_GRAY		"\001\e[0;90m\002"
 # define T_RED		"\001\e[0;91m\002"
-# define T_GREEN		"\001\e[0;92m\002"
+# define T_GREEN	"\001\e[0;92m\002"
 # define T_MAGENTA	"\001\e[35m\002"
 # define T_CYAN		"\001\e[36m\002"
 
@@ -181,12 +181,13 @@ typedef struct s_data
 	t_map			*map;
 	t_image			*texture;
 	long			next_frame;
+	int				exit_code;
 	bool			keys[6];
 }				t_data;
 
 long	cub_current_time(void);
 int		cub_check_input(int argc, char *filename);
-int		cub_check_map(char map[MAP_H_MAX][MAP_W_MAX], t_data *data, int x, int y);
+int		cub_check_map(char map[MAP_H_MAX][MAP_W_MAX], t_data *data);
 int		cub_exit(t_data *data);
 
 void	cub_init(char **argv, t_data *data);

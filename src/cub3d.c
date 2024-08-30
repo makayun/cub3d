@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:15 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/24 00:33:56 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/30 15:41:07 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	cub_exit(t_data *data)
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
 	free (data->mlx);
-	exit(EXIT_SUCCESS);
+	exit(data->exit_code);
 	return (42);
 }
 

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 09:19:00 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/29 02:54:44 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/30 15:51:32 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,11 @@ int	cub_check_map_p(char map[MAP_H_MAX][MAP_W_MAX], t_data *data, int x, int y)
 	return (left && right && up && down);
 }
 
-int	cub_check_map(char map[MAP_H_MAX][MAP_W_MAX], t_data *data, int x, int y)
+int	cub_check_map(char map[MAP_H_MAX][MAP_W_MAX], t_data *data)
 {
+	const int	x = ((int)data->player->pos.x / BLOCK);
+	const int	y = ((int)data->player->pos.y / BLOCK);
+
 	if (cub_check_map_p(map, data, x, y) == 0)
 	{
 		printf(T_RED"Error:\nThe player is not surrounded by walls!\n"T_DEF);

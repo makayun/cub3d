@@ -3,8 +3,8 @@ SO ./assets/xpms/64/test.xpm
 WE ./assets/xpms/64/test.xpm
 EA ./assets/xpms/64/test.xpm
 
-C 255, 255, 255
-F 0, 0, 0
+F 10,10,-1
+C 20,20,20
 
 11111111111111
 100000100000001

@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:41:00 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/29 03:23:13 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/08/30 15:40:16 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	cub_init(char **argv, t_data *data)
 {
 	int	i;
 
+	data->exit_code = EXIT_FAILURE;
 	if (cub_parse(argv[1], data) == CUB_ERROR)
 		exit (EXIT_FAILURE);
 	if (data->map->x >= MAP_W_MAX || data->map->y >= MAP_H_MAX)
@@ -119,4 +120,5 @@ void	cub_init(char **argv, t_data *data)
 	i = 0;
 	while (i < 6)
 		data->keys[i++] = 0;
+	data->exit_code = EXIT_SUCCESS;
 }
