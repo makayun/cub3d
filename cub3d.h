@@ -6,7 +6,7 @@
 /*   By: maxmakagonov <maxmakagonov@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 17:09:10 by maxmakagono       #+#    #+#             */
-/*   Updated: 2024/08/30 15:51:08 by maxmakagono      ###   ########.fr       */
+/*   Updated: 2024/09/02 09:52:52 by maxmakagono      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define WIN_WIDTH	1024
 # define WIN_HEIGHT	640
 
-# define BLOCK		8
+# define BLOCK		16
 
 enum e_map_constants
 {
@@ -41,7 +41,7 @@ enum e_map_constants
 
 enum e_fps
 {
-	FPS =			30,
+	FPS =			60,
 	FRAME_TIME =	1000000 / FPS,
 };
 
